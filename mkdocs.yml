@@ -1,0 +1,9 @@
+site_name: ProxyBuilder
+pages:
+- Home: index.md
+- About: about.md
+#theme: readthedocs
+#markdown_extensions: [fenced_code]
+markdown_extensions:
+    - toc:
+        permalink: True
