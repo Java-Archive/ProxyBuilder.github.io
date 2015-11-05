@@ -60,6 +60,24 @@
                 
                 
                     <li >
+                        <a href="dynamicproxy/">DynamicProxy</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="objectadapter/">ObjectAdapter</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="staticproxy/">StaticProxy</a>
+                    </li>
+                
+                
+                
+                    <li >
                         <a href="about/">About</a>
                     </li>
                 
@@ -80,7 +98,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="about/">
+                        <a rel="prev" href="dynamicproxy/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -98,19 +116,9 @@
     
         <li class="main active"><a href="#welcome-to-proxybuilder">Welcome to ProxyBuilder</a></li>
         
-    
-        <li class="main "><a href="#iot-workshop">IoT-Workshop</a></li>
+            <li><a href="#some-examples">Some examples</a></li>
         
-            <li><a href="#industrial-prototyping-with-java-8-and-tinkerforge">Industrial Prototyping with Java 8 and TinkerForge</a></li>
-        
-    
-        <li class="main "><a href="#talks">Talks</a></li>
-        
-            <li><a href="#proxy-deep-dive">Proxy Deep Dive</a></li>
-        
-            <li><a href="#from-junit-to-mutation-testing">From jUnit to Mutation Testing</a></li>
-        
-            <li><a href="#di-and-cdi-frameworks-internals">DI and CDI frameworks internals</a></li>
+            <li><a href="#snapshots">SNAPSHOTS</a></li>
         
     
     </ul>
@@ -118,55 +126,61 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="welcome-to-proxybuilder">Welcome to ProxyBuilder<a class="headerlink" href="#welcome-to-proxybuilder" title="Permanent link">&para;</a></h1>
-<p>Here we will describe the ProxyBuilder from <a href=""></a></p>
-<p>For full documentation visit <a href="http://mkdocs.org">mkdocs.org</a>.</p>
-<p>Abstracts for the Conf.</p>
-<h1 id="iot-workshop">IoT-Workshop<a class="headerlink" href="#iot-workshop" title="Permanent link">&para;</a></h1>
-<h2 id="industrial-prototyping-with-java-8-and-tinkerforge">Industrial Prototyping with Java 8 and TinkerForge<a class="headerlink" href="#industrial-prototyping-with-java-8-and-tinkerforge" title="Permanent link">&para;</a></h2>
-<p>TinkerForge is a very simple, easy-to-handle modular electronic system. Depending on the application, a system of sensor, wireless and motor control elements can be built in a modular way and programmed with a few lines of code. No soldering iron is needed. Both the hardware and the software are open source. After a brief overview of the available sensors and actuators, we will quickly start with the actual programming. Together, we will explore different applications, architectures, and the combination of TinkerForge with Java. Using sensors, actuators and some other elements, we will take the first steps and delve into the practical world of IoT with Java 8 and TinkerForge. </p>
-<p>What do I need to bring?</p>
+<p>Here we will describe the ProxyBuilder from <a href="https://github.com/ProxyBuilder/proxybuilder">github.com/ProxyBuilder/proxybuilder</a></p>
+<p>The project-target is a Builder-Framework for creating different types of proxies. 
+You will find three main groups of proxies.</p>
 <ul>
-<li>A laptop on which you can install software</li>
-<li>Java 8 (JDK) installed and running</li>
-<li>A JDK 8 capable IDE</li>
+<li><a href="http://www.proxybuilder.org/dynamicproxy/">DynamicProxies</a></li>
+<li><a href="http://www.proxybuilder.org/objectadapter/">ObjectAdapter</a></li>
+<li><a href="http://www.proxybuilder.org/staticproxy/">StaticProxies</a></li>
 </ul>
-<p>Optionally, you can of course also bring your own Raspberry Pi or the like.</p>
-<p>Goals:</p>
+<p>If you want to have an overview of the Proxy-Pattern itself I can recommend
+the following sources.</p>
+<p>engl:</p>
 <ul>
-<li>addressing sensors, storing data and display them using JavaFX.</li>
-<li>(opt) parallel processing of sensor data streams using Java 8 Streams</li>
-<li>using touch elements</li>
+<li>(soon) a free gitbook about Pattern and more <a href="https://www.gitbook.com/book/sven-ruppert/java-fundamentals-in-english/">Java Fundamentals in english</a></li>
 </ul>
-<pre><code class="java">
-@Test
-  public void test004() throws Exception {
-    final ServiceHandle&lt;BusinessService&gt; serviceHandle = locator.getServiceHandle(BusinessService.class);
-    final BusinessService myService = serviceHandle.getService();
-    Assert.assertNotNull(myService);
-
-    Assert.assertEquals(myService.getClass(), BusinessServiceImplA.class);
-    System.out.println(&quot;myService.doWork(\&quot;h\&quot;) = &quot; + myService.doWork(&quot;h&quot;));
-
-    final Object serviceData = serviceHandle.getServiceData();
-    System.out.println(&quot;serviceData = &quot; + serviceData);
-
-
-  }
+<p>german:</p>
+<ul>
+<li>a book written by Dr. Heinz Kabutz und me <a href="http://www.amazon.de/Dynamic-Proxies-Effizient-programmieren-schnell-ebook/dp/B00ZI1B3NY/ref=la_B00NC42K7C_1_4?s=books&amp;ie=UTF8&amp;qid=1446729764&amp;sr=1-4">amazon</a></li>
+<li>a free gitbook about Pattern and more <a href="https://www.gitbook.com/book/sven-ruppert/kurse/details">Java Fundamentals</a></li>
+</ul>
+<h2 id="some-examples">Some examples<a class="headerlink" href="#some-examples" title="Permanent link">&para;</a></h2>
+<h3 id="dynamicproxybuilder">DynamicProxyBuilder<a class="headerlink" href="#dynamicproxybuilder" title="Permanent link">&para;</a></h3>
+<h2 id="snapshots">SNAPSHOTS<a class="headerlink" href="#snapshots" title="Permanent link">&para;</a></h2>
+<p>If you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central. </p>
+<pre><code class="xml">   &lt;profile&gt;
+      &lt;id&gt;allow-snapshots&lt;/id&gt;
+      &lt;activation&gt;
+        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+      &lt;/activation&gt;
+      &lt;repositories&gt;
+        &lt;repository&gt;
+          &lt;id&gt;snapshots-repo&lt;/id&gt;
+          &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots&lt;/url&gt;
+          &lt;releases&gt;
+            &lt;enabled&gt;false&lt;/enabled&gt;
+          &lt;/releases&gt;
+          &lt;snapshots&gt;
+            &lt;enabled&gt;true&lt;/enabled&gt;
+            &lt;updatePolicy&gt;always&lt;/updatePolicy&gt;
+          &lt;/snapshots&gt;
+        &lt;/repository&gt;
+      &lt;/repositories&gt;
+    &lt;/profile&gt;
 </code></pre>
 
-<h1 id="talks">Talks<a class="headerlink" href="#talks" title="Permanent link">&para;</a></h1>
-<h2 id="proxy-deep-dive">Proxy Deep Dive<a class="headerlink" href="#proxy-deep-dive" title="Permanent link">&para;</a></h2>
-<p>At this talk we will start from the basics and come shortly to Dynamic-/Static-Proxies, generated typesave DynamicObjectAdapter, ProxyBuilder and more. How we could combine this with with an other language like kotlin? We will have a deep dive to this pattern group , and I am sure you will like it ;-) </p>
-<p>This talk is an extension of the german book "Dynamic Proxies" written from Dr. Heinz Kabutz and me.</p>
-<h2 id="from-junit-to-mutation-testing">From jUnit to Mutation Testing<a class="headerlink" href="#from-junit-to-mutation-testing" title="Permanent link">&para;</a></h2>
-<p>JUnit is a well-known tool for java developers in the area of TDD. Here it has become accepted, that CodeCoverage can be measured. In this case we distinguish between coverage on the level of classes, methods and rows. The goal is to get the CodeCoverage as high as possible on the row level, but not higher than necessary.
-What exactly does it mean? A CodeCoverage of appr. 75% on the row level is very good and can already provide a basis. But what does this figure say?
- 
-In this talk we will deal with the term Mutation Testing and show the practical ways of use. How can the coverage be defined and what can be achieved?
-How can it be integrated into an existing project and what should be considered while running a test?</p>
-<h2 id="di-and-cdi-frameworks-internals">DI and CDI frameworks internals<a class="headerlink" href="#di-and-cdi-frameworks-internals" title="Permanent link">&para;</a></h2>
-<p>Dependency Injection is now part of nearly every Java project. But what is the difference between DI and CDI. How to decide what I could use better, what  frameworks are available and what are the differences for me as a programmer? What could be an option for the IoT-, Desktop- or Webproject?</p>
-<p>In this talk we will get an overview over different frameworks and how they are working. We are not checking the well known big one only, but we are looking at some small sometimes specialized implementations.</p></div>
+<p>The developer-SNAPSHOTS are available there. You can reference them as usual.
+For example:</p>
+<pre><code class="xml">      &lt;dependency&gt;
+        &lt;groupId&gt;org.rapidpm.proxybuilder&lt;/groupId&gt;
+        &lt;artifactId&gt;rapidpm-proxybuilder-modules-builder&lt;/artifactId&gt;
+        &lt;version&gt;${rapidpm.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+
+</code></pre>
+
+<p>The actual version (2015.11.05) is <strong><em>0.0.4-SNAPSHOT</em></strong>.</p></div>
             
         </div>
 
@@ -213,5 +227,5 @@ How can it be integrated into an existing project and what should be considered 
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2015-11-03 21:24:15.116920
+Build Date UTC : 2015-11-05 15:51:21.897404
 -->

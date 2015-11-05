@@ -2,43 +2,68 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Welcome to ProxyBuilder\n\n\nHere we will describe the ProxyBuilder from \n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nAbstracts for the Conf.\n\n\nIoT-Workshop\n\n\nIndustrial Prototyping with Java 8 and TinkerForge\n\n\nTinkerForge is a very simple, easy-to-handle modular electronic system. Depending on the application, a system of sensor, wireless and motor control elements can be built in a modular way and programmed with a few lines of code. No soldering iron is needed. Both the hardware and the software are open source. After a brief overview of the available sensors and actuators, we will quickly start with the actual programming. Together, we will explore different applications, architectures, and the combination of TinkerForge with Java. Using sensors, actuators and some other elements, we will take the first steps and delve into the practical world of IoT with Java 8 and TinkerForge. \n\n\nWhat do I need to bring?\n\n\n\n\nA laptop on which you can install software\n\n\nJava 8 (JDK) installed and running\n\n\nA JDK 8 capable IDE\n\n\n\n\nOptionally, you can of course also bring your own Raspberry Pi or the like.\n\n\nGoals:\n\n\n\n\naddressing sensors, storing data and display them using JavaFX.\n\n\n(opt) parallel processing of sensor data streams using Java 8 Streams\n\n\nusing touch elements\n\n\n\n\n\n@Test\n  public void test004() throws Exception {\n    final ServiceHandle\nBusinessService\n serviceHandle = locator.getServiceHandle(BusinessService.class);\n    final BusinessService myService = serviceHandle.getService();\n    Assert.assertNotNull(myService);\n\n    Assert.assertEquals(myService.getClass(), BusinessServiceImplA.class);\n    System.out.println(\nmyService.doWork(\\\nh\\\n) = \n + myService.doWork(\nh\n));\n\n    final Object serviceData = serviceHandle.getServiceData();\n    System.out.println(\nserviceData = \n + serviceData);\n\n\n  }\n\n\n\n\nTalks\n\n\nProxy Deep Dive\n\n\nAt this talk we will start from the basics and come shortly to Dynamic-/Static-Proxies, generated typesave DynamicObjectAdapter, ProxyBuilder and more. How we could combine this with with an other language like kotlin? We will have a deep dive to this pattern group , and I am sure you will like it ;-) \n\n\nThis talk is an extension of the german book \"Dynamic Proxies\" written from Dr. Heinz Kabutz and me.\n\n\nFrom jUnit to Mutation Testing\n\n\nJUnit is a well-known tool for java developers in the area of TDD. Here it has become accepted, that CodeCoverage can be measured. In this case we distinguish between coverage on the level of classes, methods and rows. The goal is to get the CodeCoverage as high as possible on the row level, but not higher than necessary.\nWhat exactly does it mean? A CodeCoverage of appr. 75% on the row level is very good and can already provide a basis. But what does this figure say?\n\u00a0\nIn this talk we will deal with the term\u00a0Mutation Testing\u00a0and show the practical ways of use. How can the coverage be defined and what can be achieved?\nHow can it be integrated into an existing project and what should be considered while running a test?\n\n\nDI and CDI frameworks internals\n\n\nDependency Injection is now part of nearly every Java project. But what is the difference between DI and CDI. How to decide what I could use better, what  frameworks are available and what are the differences for me as a programmer? What could be an option for the IoT-, Desktop- or Webproject?\n\n\nIn this talk we will get an overview over different frameworks and how they are working. We are not checking the well known big one only, but we are looking at some small sometimes specialized implementations.", 
+            "text": "Welcome to ProxyBuilder\n\n\nHere we will describe the ProxyBuilder from \ngithub.com/ProxyBuilder/proxybuilder\n\n\nThe project-target is a Builder-Framework for creating different types of proxies. \nYou will find three main groups of proxies.\n\n\n\n\nDynamicProxies\n\n\nObjectAdapter\n\n\nStaticProxies\n\n\n\n\nIf you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.\n\n\nengl:\n\n\n\n\n(soon) a free gitbook about Pattern and more \nJava Fundamentals in english\n\n\n\n\ngerman:\n\n\n\n\na book written by Dr. Heinz Kabutz und me \namazon\n\n\na free gitbook about Pattern and more \nJava Fundamentals\n\n\n\n\nSome examples\n\n\nDynamicProxyBuilder\n\n\nSNAPSHOTS\n\n\nIf you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central. \n\n\n   \nprofile\n\n      \nid\nallow-snapshots\n/id\n\n      \nactivation\n\n        \nactiveByDefault\ntrue\n/activeByDefault\n\n      \n/activation\n\n      \nrepositories\n\n        \nrepository\n\n          \nid\nsnapshots-repo\n/id\n\n          \nurl\nhttps://oss.sonatype.org/content/repositories/snapshots\n/url\n\n          \nreleases\n\n            \nenabled\nfalse\n/enabled\n\n          \n/releases\n\n          \nsnapshots\n\n            \nenabled\ntrue\n/enabled\n\n            \nupdatePolicy\nalways\n/updatePolicy\n\n          \n/snapshots\n\n        \n/repository\n\n      \n/repositories\n\n    \n/profile\n\n\n\n\n\nThe developer-SNAPSHOTS are available there. You can reference them as usual.\nFor example:\n\n\n      \ndependency\n\n        \ngroupId\norg.rapidpm.proxybuilder\n/groupId\n\n        \nartifactId\nrapidpm-proxybuilder-modules-builder\n/artifactId\n\n        \nversion\n${rapidpm.version}\n/version\n\n      \n/dependency\n\n\n\n\n\n\nThe actual version (2015.11.05) is \n0.0.4-SNAPSHOT\n.", 
             "title": "Home"
         }, 
         {
             "location": "/#welcome-to-proxybuilder", 
-            "text": "Here we will describe the ProxyBuilder from   For full documentation visit  mkdocs.org .  Abstracts for the Conf.", 
+            "text": "Here we will describe the ProxyBuilder from  github.com/ProxyBuilder/proxybuilder  The project-target is a Builder-Framework for creating different types of proxies. \nYou will find three main groups of proxies.   DynamicProxies  ObjectAdapter  StaticProxies   If you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.  engl:   (soon) a free gitbook about Pattern and more  Java Fundamentals in english   german:   a book written by Dr. Heinz Kabutz und me  amazon  a free gitbook about Pattern and more  Java Fundamentals", 
             "title": "Welcome to ProxyBuilder"
         }, 
         {
-            "location": "/#iot-workshop", 
+            "location": "/#some-examples", 
+            "text": "DynamicProxyBuilder", 
+            "title": "Some examples"
+        }, 
+        {
+            "location": "/#snapshots", 
+            "text": "If you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central.       profile \n       id allow-snapshots /id \n       activation \n         activeByDefault true /activeByDefault \n       /activation \n       repositories \n         repository \n           id snapshots-repo /id \n           url https://oss.sonatype.org/content/repositories/snapshots /url \n           releases \n             enabled false /enabled \n           /releases \n           snapshots \n             enabled true /enabled \n             updatePolicy always /updatePolicy \n           /snapshots \n         /repository \n       /repositories \n     /profile   The developer-SNAPSHOTS are available there. You can reference them as usual.\nFor example:         dependency \n         groupId org.rapidpm.proxybuilder /groupId \n         artifactId rapidpm-proxybuilder-modules-builder /artifactId \n         version ${rapidpm.version} /version \n       /dependency   The actual version (2015.11.05) is  0.0.4-SNAPSHOT .", 
+            "title": "SNAPSHOTS"
+        }, 
+        {
+            "location": "/dynamicproxy/", 
+            "text": "DynamicProxy\n\n\nSince jdk1.3 the DynamicProxy is part of the JDK. \nThe official documentation/API-Doc for JDK8 you can find \n\nhere\n\n\nVirtualProxy\n\n\nAddMetrics\n\n\nMethodScoped\n\n\nPreAction\n\n\nPostAction", 
+            "title": "DynamicProxy"
+        }, 
+        {
+            "location": "/dynamicproxy/#dynamicproxy", 
+            "text": "Since jdk1.3 the DynamicProxy is part of the JDK. \nThe official documentation/API-Doc for JDK8 you can find  here", 
+            "title": "DynamicProxy"
+        }, 
+        {
+            "location": "/dynamicproxy/#virtualproxy", 
             "text": "", 
-            "title": "IoT-Workshop"
+            "title": "VirtualProxy"
         }, 
         {
-            "location": "/#industrial-prototyping-with-java-8-and-tinkerforge", 
-            "text": "TinkerForge is a very simple, easy-to-handle modular electronic system. Depending on the application, a system of sensor, wireless and motor control elements can be built in a modular way and programmed with a few lines of code. No soldering iron is needed. Both the hardware and the software are open source. After a brief overview of the available sensors and actuators, we will quickly start with the actual programming. Together, we will explore different applications, architectures, and the combination of TinkerForge with Java. Using sensors, actuators and some other elements, we will take the first steps and delve into the practical world of IoT with Java 8 and TinkerForge.   What do I need to bring?   A laptop on which you can install software  Java 8 (JDK) installed and running  A JDK 8 capable IDE   Optionally, you can of course also bring your own Raspberry Pi or the like.  Goals:   addressing sensors, storing data and display them using JavaFX.  (opt) parallel processing of sensor data streams using Java 8 Streams  using touch elements   \n@Test\n  public void test004() throws Exception {\n    final ServiceHandle BusinessService  serviceHandle = locator.getServiceHandle(BusinessService.class);\n    final BusinessService myService = serviceHandle.getService();\n    Assert.assertNotNull(myService);\n\n    Assert.assertEquals(myService.getClass(), BusinessServiceImplA.class);\n    System.out.println( myService.doWork(\\ h\\ ) =   + myService.doWork( h ));\n\n    final Object serviceData = serviceHandle.getServiceData();\n    System.out.println( serviceData =   + serviceData);\n\n\n  }", 
-            "title": "Industrial Prototyping with Java 8 and TinkerForge"
-        }, 
-        {
-            "location": "/#talks", 
+            "location": "/dynamicproxy/#addmetrics", 
             "text": "", 
-            "title": "Talks"
+            "title": "AddMetrics"
         }, 
         {
-            "location": "/#proxy-deep-dive", 
-            "text": "At this talk we will start from the basics and come shortly to Dynamic-/Static-Proxies, generated typesave DynamicObjectAdapter, ProxyBuilder and more. How we could combine this with with an other language like kotlin? We will have a deep dive to this pattern group , and I am sure you will like it ;-)   This talk is an extension of the german book \"Dynamic Proxies\" written from Dr. Heinz Kabutz and me.", 
-            "title": "Proxy Deep Dive"
+            "location": "/dynamicproxy/#methodscoped", 
+            "text": "", 
+            "title": "MethodScoped"
         }, 
         {
-            "location": "/#from-junit-to-mutation-testing", 
-            "text": "JUnit is a well-known tool for java developers in the area of TDD. Here it has become accepted, that CodeCoverage can be measured. In this case we distinguish between coverage on the level of classes, methods and rows. The goal is to get the CodeCoverage as high as possible on the row level, but not higher than necessary.\nWhat exactly does it mean? A CodeCoverage of appr. 75% on the row level is very good and can already provide a basis. But what does this figure say?\n\u00a0\nIn this talk we will deal with the term\u00a0Mutation Testing\u00a0and show the practical ways of use. How can the coverage be defined and what can be achieved?\nHow can it be integrated into an existing project and what should be considered while running a test?", 
-            "title": "From jUnit to Mutation Testing"
+            "location": "/dynamicproxy/#preaction", 
+            "text": "", 
+            "title": "PreAction"
         }, 
         {
-            "location": "/#di-and-cdi-frameworks-internals", 
-            "text": "Dependency Injection is now part of nearly every Java project. But what is the difference between DI and CDI. How to decide what I could use better, what  frameworks are available and what are the differences for me as a programmer? What could be an option for the IoT-, Desktop- or Webproject?  In this talk we will get an overview over different frameworks and how they are working. We are not checking the well known big one only, but we are looking at some small sometimes specialized implementations.", 
-            "title": "DI and CDI frameworks internals"
+            "location": "/dynamicproxy/#postaction", 
+            "text": "", 
+            "title": "PostAction"
+        }, 
+        {
+            "location": "/objectadapter/", 
+            "text": "", 
+            "title": "ObjectAdapter"
+        }, 
+        {
+            "location": "/staticproxy/", 
+            "text": "", 
+            "title": "StaticProxy"
         }, 
         {
             "location": "/about/", 
