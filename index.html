@@ -116,9 +116,13 @@
     
         <li class="main active"><a href="#welcome-to-proxybuilder">Welcome to ProxyBuilder</a></li>
         
-            <li><a href="#some-examples">Some examples</a></li>
+            <li><a href="#buildstatus">Buildstatus</a></li>
         
-            <li><a href="#snapshots">SNAPSHOTS</a></li>
+            <li><a href="#project-structure">Project structure</a></li>
+        
+            <li><a href="#additional-informations">Additional Informations</a></li>
+        
+            <li><a href="#getting-started">Getting started</a></li>
         
     
     </ul>
@@ -127,6 +131,20 @@
 
 <h1 id="welcome-to-proxybuilder">Welcome to ProxyBuilder<a class="headerlink" href="#welcome-to-proxybuilder" title="Permanent link">&para;</a></h1>
 <p>Here we will describe the ProxyBuilder from <a href="https://github.com/ProxyBuilder/proxybuilder">github.com/ProxyBuilder/proxybuilder</a></p>
+<p>This project is sponsored with OpenSource Licences from </p>
+<p><img alt="Jetbrains" src="./_data/logo_intellij_idea.png" />
+<img alt="YourKit" src="./_data/yklogo.png" /></p>
+<h2 id="buildstatus">Buildstatus<a class="headerlink" href="#buildstatus" title="Permanent link">&para;</a></h2>
+<p><a href="https://drone.io/github.com/RapidPM/proxybuilder/latest"><img alt="Build Status - drone.io " src="https://drone.io/github.com/RapidPM/proxybuilder/status.png" /></a></p>
+<p>master:
+<a href="https://travis-ci.org/RapidPM/proxybuilder"><img alt="Build Status - Travis   " src="https://travis-ci.org/RapidPM/proxybuilder.svg?branch=develop" /></a>
+<a href="https://coveralls.io/r/RapidPM/proxybuilder?branch=master"><img alt="Coverage Status - master" src="https://coveralls.io/repos/RapidPM/proxybuilder/badge.svg?branch=master" /></a>
+<a href="https://www.versioneye.com/user/projects/55a3ab9532393900210005cc"><img alt="Dependency Status" src="https://www.versioneye.com/user/projects/55a3ab9532393900210005cc/badge.svg?style=flat" /></a></p>
+<p>develop:
+<a href="https://travis-ci.org/RapidPM/proxybuilder"><img alt="Build Status - Travis   " src="https://travis-ci.org/RapidPM/proxybuilder.svg?branch=master" /></a>
+<a href="https://coveralls.io/r/RapidPM/proxybuilder?branch=develop"><img alt="Coverage Status - develop" src="https://coveralls.io/repos/RapidPM/proxybuilder/badge.svg?branch=develop" /></a>
+<a href="https://www.versioneye.com/user/projects/55a3ab9a32393900170005be"><img alt="Dependency Status" src="https://www.versioneye.com/user/projects/55a3ab9a32393900170005be/badge.svg?style=flat" /></a></p>
+<h2 id="project-structure">Project structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
 <p>The project-target is a Builder-Framework for creating different types of proxies. 
 You will find three main groups of proxies.</p>
 <ul>
@@ -134,21 +152,26 @@ You will find three main groups of proxies.</p>
 <li><a href="http://www.proxybuilder.org/objectadapter/">ObjectAdapter</a></li>
 <li><a href="http://www.proxybuilder.org/staticproxy/">StaticProxies</a></li>
 </ul>
+<h2 id="additional-informations">Additional Informations<a class="headerlink" href="#additional-informations" title="Permanent link">&para;</a></h2>
 <p>If you want to have an overview of the Proxy-Pattern itself I can recommend
 the following sources.</p>
-<p>engl:</p>
+<p><strong>engl:</strong></p>
 <ul>
+<li>My Java One Tutorial (2015) <a href="https://youtu.be/FoKSX2WmT4g">Proxy Deep Dive </a></li>
 <li>(soon) a free gitbook about Pattern and more <a href="https://www.gitbook.com/book/sven-ruppert/java-fundamentals-in-english/">Java Fundamentals in english</a></li>
 </ul>
-<p>german:</p>
+<p><strong>german:</strong></p>
 <ul>
 <li>a book written by Dr. Heinz Kabutz und me <a href="http://www.amazon.de/Dynamic-Proxies-Effizient-programmieren-schnell-ebook/dp/B00ZI1B3NY/ref=la_B00NC42K7C_1_4?s=books&amp;ie=UTF8&amp;qid=1446729764&amp;sr=1-4">amazon</a></li>
 <li>a free gitbook about Pattern and more <a href="https://www.gitbook.com/book/sven-ruppert/kurse/details">Java Fundamentals</a></li>
 </ul>
-<h2 id="some-examples">Some examples<a class="headerlink" href="#some-examples" title="Permanent link">&para;</a></h2>
-<h3 id="dynamicproxybuilder">DynamicProxyBuilder<a class="headerlink" href="#dynamicproxybuilder" title="Permanent link">&para;</a></h3>
-<h2 id="snapshots">SNAPSHOTS<a class="headerlink" href="#snapshots" title="Permanent link">&para;</a></h2>
-<p>If you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central. </p>
+<h3 id="release">Release<a class="headerlink" href="#release" title="Permanent link">&para;</a></h3>
+<p>The latest Release is <strong>Version 0.0.3</strong>. If you want to see what is included, check the Issue tracker please.
+<a href="https://rapidpm.myjetbrains.com">rapidpm.myjetbrains.com</a></p>
+<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="get-snapshots">GET SNAPSHOTS<a class="headerlink" href="#get-snapshots" title="Permanent link">&para;</a></h3>
+<p>To bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central.  Here I will push regularly the binaryies. 
+If you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central. </p>
 <pre><code class="xml">   &lt;profile&gt;
       &lt;id&gt;allow-snapshots&lt;/id&gt;
       &lt;activation&gt;
@@ -180,7 +203,7 @@ For example:</p>
 
 </code></pre>
 
-<p>The actual version (2015.11.05) is <strong><em>0.0.4-SNAPSHOT</em></strong>.</p></div>
+<p>The actual version is <strong><em>0.0.4-SNAPSHOT</em></strong>.</p></div>
             
         </div>
 
@@ -227,5 +250,5 @@ For example:</p>
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2015-11-05 15:51:21.897404
+Build Date UTC : 2015-11-19 11:56:47.875791
 -->
