@@ -2,42 +2,42 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Welcome to ProxyBuilder\n\n\nHere we will describe the ProxyBuilder from \ngithub.com/ProxyBuilder/proxybuilder\n\n\nThis project is sponsored with OpenSource Licences from \n\n\n\n\n\n\nBuildstatus\n\n\n\n\nmaster:\n\n\n\n\n\n\n\ndevelop:\n\n\n\n\n\n\n\nProject structure\n\n\nThe project-target is a Builder-Framework for creating different types of proxies. \nYou will find three main groups of proxies.\n\n\n\n\nDynamicProxies\n\n\nObjectAdapter\n\n\nStaticProxies\n\n\n\n\nAdditional Informations\n\n\nIf you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.\n\n\nengl:\n\n\n\n\nMy Java One Tutorial (2015) \nProxy Deep Dive \n\n\n(soon) a free gitbook about Pattern and more \nJava Fundamentals in english\n\n\n\n\ngerman:\n\n\n\n\na book written by Dr. Heinz Kabutz und me \namazon\n\n\na free gitbook about Pattern and more \nJava Fundamentals\n\n\n\n\nRelease\n\n\nThe latest Release is \nVersion 0.0.3\n. If you want to see what is included, check the Issue tracker please.\n\nrapidpm.myjetbrains.com\n\n\nGetting started\n\n\nGET SNAPSHOTS\n\n\nTo bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central.  Here I will push regularly the binaryies. \nIf you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central. \n\n\n   \nprofile\n\n      \nid\nallow-snapshots\n/id\n\n      \nactivation\n\n        \nactiveByDefault\ntrue\n/activeByDefault\n\n      \n/activation\n\n      \nrepositories\n\n        \nrepository\n\n          \nid\nsnapshots-repo\n/id\n\n          \nurl\nhttps://oss.sonatype.org/content/repositories/snapshots\n/url\n\n          \nreleases\n\n            \nenabled\nfalse\n/enabled\n\n          \n/releases\n\n          \nsnapshots\n\n            \nenabled\ntrue\n/enabled\n\n            \nupdatePolicy\nalways\n/updatePolicy\n\n          \n/snapshots\n\n        \n/repository\n\n      \n/repositories\n\n    \n/profile\n\n\n\n\n\nThe developer-SNAPSHOTS are available there. You can reference them as usual.\nFor example:\n\n\n      \ndependency\n\n        \ngroupId\norg.rapidpm.proxybuilder\n/groupId\n\n        \nartifactId\nrapidpm-proxybuilder-modules-builder\n/artifactId\n\n        \nversion\n${rapidpm.version}\n/version\n\n      \n/dependency\n\n\n\n\n\n\nThe actual version is \n0.0.4-SNAPSHOT\n.", 
+            "text": "Welcome to ProxyBuilder\n\n\nHere we will describe the ProxyBuilder from \ngithub.com/ProxyBuilder/proxybuilder\n\n\nWhat are Proxies ?\n\n\nIf you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.\n\n\n \n\n\n\n \n \nJavaOne 2015 Tutorial - Proxy DeepDive\n \n from \nSven Ruppert\n \n\n\nWhat goal we want to reach?\n\n\nThis project was born, because I had to work a lot with old hughe projects. The only thing I could relay on, is the pure JDK.\nSo I started playing with different DesignPatterns and figured out, that Proxies are one of the most powerfull patterngroup for me.\nDuring the time I was writing the german Book \n\"Dynamic Proxies\"\n with \nDr. Heinz Kabutz\n I started to write examples. Step by step the examples are more generic and the \nProxyBuilder\n - project was born. \n\n\nSome Examples\n\n\nTo have an ideaw hat you could do with the \nProxyBuilder\n I will show here some examples. The more detailed \ninformations you can find in the special sections of this website. This project is based on \nJava8\n.\n\n\nSome Examples with DynamicProxies\n\n\nHere are some examples based on the \nDynamicProxy\n. But we have created \ngenerated static\n versions too...\n\n\nVirtual Proxy\n\n\nfinal DemoLogic original = new DemoLogic();\nfinal DemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(DemoInterface.class, original)\n        .build();\n\n\n\n\nSecurity Proxy\n\n\nfinal DemoLogic original = new DemoLogic();\nfinal DemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(DemoInterface.class, original)\n        .addSecurityRule(() -\n false)\n        .build();\n\n\n\n\nfinal InnerDemoClass original = new InnerDemoClass();\n    final InnerDemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(InnerDemoInterface.class, original)\n        .addSecurityRule(() -\n true)\n        .addSecurityRule(() -\n true)\n        .addSecurityRule(() -\n false)\n        .build();\n\n\n\n\nMetrics Proxy\n\n\n    final InnerDemoClass original = new InnerDemoClass();\n    final InnerDemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(InnerDemoInterface.class, original)\n        .addMetrics()\n        .build();\n\n\n\n\n\nHow to bootstrap your project?\n\n\nIf you want to be as near as possible at the actual development version, you could use this. If you need a more stable version\nchange the version numbers to the last stable one.\n\n\nIf you want to start with the \nDynamicProxyBuilder\n creating for example \nVirtualProxies\n bundled with some other things\nyou need the following dep in your pom.xml.\n\n\n    \ndependency\n\n      \ngroupId\norg.rapidpm.proxybuilder\n/groupId\n\n      \nartifactId\nrapidpm-proxybuilder-modules-dynamic\n/artifactId\n\n      \nversion\n${rapidpm.version}\n/version\n\n    \n/dependency\n\n\n\n\n\nThe \nProxyBuilder\n includes the \nKotlin\n runtime libs and \nMetrics\n from Dropwizard. \n\n\nVirtualProxy with one PreAction\n\n\nThis will be a \nVirtualProxy\n with a \nPreAction\n. You can add as many \nPreActions\n as you need. \nEvery \nPreAction\n will be executed before every method invokation in the order the \nPreAction\n was added.\n\n\npublic class ProxyDemoV001 {\n\n  public static void main(String[] args) {\n\n    final Service service = DynamicProxyBuilder\n        .createBuilder(Service.class, new ServiceImpl())\n        .addIPreAction((original, method, args1) \n                        -\n System.out.println(\n PreAction = \n + System.nanoTime()))\n        .build();\n\n    System.out.println(\nproxy created \n + System.nanoTime());\n    System.out.println(\ns = \n + service.doWork(\nGo..\n));\n  }\n\n  public interface Service {\n    String doWork(String str);\n  }\n\n  public static class ServiceImpl implements Service {\n    public ServiceImpl() {\n      System.out.println(\n ServiceImpl =\n constructor... \n + System.nanoTime());\n    }\n\n    @Override\n    public String doWork(final String str) {\n      return str + \n orig..\n;\n    }\n  }\n\n}\n\n\n\n\n\nVirtualProxy with Metrics\n\n\npublic class ProxyDemoV002 {\n\n  public static void main(String[] args) {\n    RapidPMMetricsRegistry.getInstance().startConsoleReporter();\n\n    final Service service = DynamicProxyBuilder\n        .createBuilder(Service.class, new ServiceImpl())\n        .addMetrics()\n        .build();\n\n    System.out.println(\nproxy created \n + System.nanoTime());\n    final long count = IntStream.range(0, 10_000_000)\n        .boxed()\n        .map(i -\n service.doWork(\nGo..\n + i))\n        .count();\n    System.out.println(\ns = \n + service.doWork(\nGo..\n));\n    System.out.println(\ncount = \n + count);\n  }\n\n\n  public interface Service {\n    String doWork(String str);\n  }\n\n  public static class ServiceImpl implements Service {\n    public ServiceImpl() {\n      System.out.println(\n ServiceImpl =\n constructor... \n + System.nanoTime());\n    }\n    @Override\n    public String doWork(final String str) {\n      return str + \n orig..\n;\n    }\n  }\n}\n\n\n\n\nTo bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central.\n\nHere our \nTeamCity\n will push regularly the binaryies. \nIf you are using maven you could add the following to your \nsettings.xml\n to get the snapshots that are available at maven-central. \n\n\n   \nprofile\n\n      \nid\nallow-snapshots\n/id\n\n      \nactivation\n\n        \nactiveByDefault\ntrue\n/activeByDefault\n\n      \n/activation\n\n      \nrepositories\n\n        \nrepository\n\n          \nid\nsnapshots-repo\n/id\n\n          \nurl\nhttps://oss.sonatype.org/content/repositories/snapshots\n/url\n\n          \nreleases\n\n            \nenabled\nfalse\n/enabled\n\n          \n/releases\n\n          \nsnapshots\n\n            \nenabled\ntrue\n/enabled\n\n            \nupdatePolicy\nalways\n/updatePolicy\n\n          \n/snapshots\n\n        \n/repository\n\n      \n/repositories\n\n    \n/profile", 
             "title": "Home"
         }, 
         {
             "location": "/#welcome-to-proxybuilder", 
-            "text": "Here we will describe the ProxyBuilder from  github.com/ProxyBuilder/proxybuilder  This project is sponsored with OpenSource Licences from", 
+            "text": "Here we will describe the ProxyBuilder from  github.com/ProxyBuilder/proxybuilder", 
             "title": "Welcome to ProxyBuilder"
         }, 
         {
-            "location": "/#buildstatus", 
-            "text": "master:    develop:", 
-            "title": "Buildstatus"
+            "location": "/#what-are-proxies", 
+            "text": "If you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.         JavaOne 2015 Tutorial - Proxy DeepDive    from  Sven Ruppert", 
+            "title": "What are Proxies ?"
         }, 
         {
-            "location": "/#project-structure", 
-            "text": "The project-target is a Builder-Framework for creating different types of proxies. \nYou will find three main groups of proxies.   DynamicProxies  ObjectAdapter  StaticProxies", 
-            "title": "Project structure"
+            "location": "/#what-goal-we-want-to-reach", 
+            "text": "This project was born, because I had to work a lot with old hughe projects. The only thing I could relay on, is the pure JDK.\nSo I started playing with different DesignPatterns and figured out, that Proxies are one of the most powerfull patterngroup for me.\nDuring the time I was writing the german Book  \"Dynamic Proxies\"  with  Dr. Heinz Kabutz  I started to write examples. Step by step the examples are more generic and the  ProxyBuilder  - project was born.", 
+            "title": "What goal we want to reach?"
         }, 
         {
-            "location": "/#additional-informations", 
-            "text": "If you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.  engl:   My Java One Tutorial (2015)  Proxy Deep Dive   (soon) a free gitbook about Pattern and more  Java Fundamentals in english   german:   a book written by Dr. Heinz Kabutz und me  amazon  a free gitbook about Pattern and more  Java Fundamentals   Release  The latest Release is  Version 0.0.3 . If you want to see what is included, check the Issue tracker please. rapidpm.myjetbrains.com", 
-            "title": "Additional Informations"
+            "location": "/#some-examples", 
+            "text": "To have an ideaw hat you could do with the  ProxyBuilder  I will show here some examples. The more detailed \ninformations you can find in the special sections of this website. This project is based on  Java8 .  Some Examples with DynamicProxies  Here are some examples based on the  DynamicProxy . But we have created  generated static  versions too...  Virtual Proxy  final DemoLogic original = new DemoLogic();\nfinal DemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(DemoInterface.class, original)\n        .build();  Security Proxy  final DemoLogic original = new DemoLogic();\nfinal DemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(DemoInterface.class, original)\n        .addSecurityRule(() -  false)\n        .build();  final InnerDemoClass original = new InnerDemoClass();\n    final InnerDemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(InnerDemoInterface.class, original)\n        .addSecurityRule(() -  true)\n        .addSecurityRule(() -  true)\n        .addSecurityRule(() -  false)\n        .build();  Metrics Proxy      final InnerDemoClass original = new InnerDemoClass();\n    final InnerDemoInterface demoLogic = VirtualProxyBuilder\n        .createBuilder(InnerDemoInterface.class, original)\n        .addMetrics()\n        .build();", 
+            "title": "Some Examples"
         }, 
         {
-            "location": "/#getting-started", 
-            "text": "GET SNAPSHOTS  To bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central.  Here I will push regularly the binaryies. \nIf you are using maven you could add the following to your settings.xml to get the snapshots that are available at maven-central.       profile \n       id allow-snapshots /id \n       activation \n         activeByDefault true /activeByDefault \n       /activation \n       repositories \n         repository \n           id snapshots-repo /id \n           url https://oss.sonatype.org/content/repositories/snapshots /url \n           releases \n             enabled false /enabled \n           /releases \n           snapshots \n             enabled true /enabled \n             updatePolicy always /updatePolicy \n           /snapshots \n         /repository \n       /repositories \n     /profile   The developer-SNAPSHOTS are available there. You can reference them as usual.\nFor example:         dependency \n         groupId org.rapidpm.proxybuilder /groupId \n         artifactId rapidpm-proxybuilder-modules-builder /artifactId \n         version ${rapidpm.version} /version \n       /dependency   The actual version is  0.0.4-SNAPSHOT .", 
-            "title": "Getting started"
+            "location": "/#how-to-bootstrap-your-project", 
+            "text": "If you want to be as near as possible at the actual development version, you could use this. If you need a more stable version\nchange the version numbers to the last stable one.  If you want to start with the  DynamicProxyBuilder  creating for example  VirtualProxies  bundled with some other things\nyou need the following dep in your pom.xml.       dependency \n       groupId org.rapidpm.proxybuilder /groupId \n       artifactId rapidpm-proxybuilder-modules-dynamic /artifactId \n       version ${rapidpm.version} /version \n     /dependency   The  ProxyBuilder  includes the  Kotlin  runtime libs and  Metrics  from Dropwizard.   VirtualProxy with one PreAction  This will be a  VirtualProxy  with a  PreAction . You can add as many  PreActions  as you need. \nEvery  PreAction  will be executed before every method invokation in the order the  PreAction  was added.  public class ProxyDemoV001 {\n\n  public static void main(String[] args) {\n\n    final Service service = DynamicProxyBuilder\n        .createBuilder(Service.class, new ServiceImpl())\n        .addIPreAction((original, method, args1) \n                        -  System.out.println(  PreAction =   + System.nanoTime()))\n        .build();\n\n    System.out.println( proxy created   + System.nanoTime());\n    System.out.println( s =   + service.doWork( Go.. ));\n  }\n\n  public interface Service {\n    String doWork(String str);\n  }\n\n  public static class ServiceImpl implements Service {\n    public ServiceImpl() {\n      System.out.println(  ServiceImpl =  constructor...   + System.nanoTime());\n    }\n\n    @Override\n    public String doWork(final String str) {\n      return str +   orig.. ;\n    }\n  }\n\n}  VirtualProxy with Metrics  public class ProxyDemoV002 {\n\n  public static void main(String[] args) {\n    RapidPMMetricsRegistry.getInstance().startConsoleReporter();\n\n    final Service service = DynamicProxyBuilder\n        .createBuilder(Service.class, new ServiceImpl())\n        .addMetrics()\n        .build();\n\n    System.out.println( proxy created   + System.nanoTime());\n    final long count = IntStream.range(0, 10_000_000)\n        .boxed()\n        .map(i -  service.doWork( Go..  + i))\n        .count();\n    System.out.println( s =   + service.doWork( Go.. ));\n    System.out.println( count =   + count);\n  }\n\n\n  public interface Service {\n    String doWork(String str);\n  }\n\n  public static class ServiceImpl implements Service {\n    public ServiceImpl() {\n      System.out.println(  ServiceImpl =  constructor...   + System.nanoTime());\n    }\n    @Override\n    public String doWork(final String str) {\n      return str +   orig.. ;\n    }\n  }\n}  To bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central. \nHere our  TeamCity  will push regularly the binaryies. \nIf you are using maven you could add the following to your  settings.xml  to get the snapshots that are available at maven-central.       profile \n       id allow-snapshots /id \n       activation \n         activeByDefault true /activeByDefault \n       /activation \n       repositories \n         repository \n           id snapshots-repo /id \n           url https://oss.sonatype.org/content/repositories/snapshots /url \n           releases \n             enabled false /enabled \n           /releases \n           snapshots \n             enabled true /enabled \n             updatePolicy always /updatePolicy \n           /snapshots \n         /repository \n       /repositories \n     /profile", 
+            "title": "How to bootstrap your project?"
         }, 
         {
             "location": "/dynamicproxy/", 
-            "text": "DynamicProxy\n\n\nSince jdk1.3 the DynamicProxy is part of the JDK. \nThe official documentation/API-Doc for JDK8 you can find \n\nhere\n\n\nVirtualProxy\n\n\nAddMetrics\n\n\nMethodScoped\n\n\nPreAction\n\n\nPostAction", 
+            "text": "DynamicProxy\n\n\nSince jdk1.3 the DynamicProxy is part of the JDK. \nThe official documentation/API-Doc for JDK8 you can find \n\nhere\n\n\nTo create Proxies based on the DynamicProxy you have to add the following dependencies to your project.\n'''xml\n\n\n'''\n\n\nVirtualProxy\n\n\nAddMetrics\n\n\nMethodScoped\n\n\nPreAction\n\n\nPostAction", 
             "title": "DynamicProxy"
         }, 
         {
             "location": "/dynamicproxy/#dynamicproxy", 
-            "text": "Since jdk1.3 the DynamicProxy is part of the JDK. \nThe official documentation/API-Doc for JDK8 you can find  here", 
+            "text": "Since jdk1.3 the DynamicProxy is part of the JDK. \nThe official documentation/API-Doc for JDK8 you can find  here  To create Proxies based on the DynamicProxy you have to add the following dependencies to your project.\n'''xml  '''", 
             "title": "DynamicProxy"
         }, 
         {
@@ -74,6 +74,71 @@
             "location": "/staticproxy/", 
             "text": "", 
             "title": "StaticProxy"
+        }, 
+        {
+            "location": "/projectinfos/", 
+            "text": "Project - Informations\n\n\nThis project is sponsored with OpenSource Licences from \n\n\n\n\n\n\nTeamCity\n\n\nYou can login as \nguest\n at \nTeamCity\n to see all build configurations and the actual\nstate of \ndevelop-\n and \nmaster-\nbranch.\n\n\nSonarCube\n\n\nFor the coverage and other metrics we are using our \nSonarCube\n installation. Feel free to check it.\n\n\nVersionEye\n\n\nWe are checking all dependencies with VersionEye. We try to use the latest versions \nfor all parts of the project.\n\n\nmaster:\n\n\ndevelop:\n\n\n\nUpsource\n\n\nIf you want to browse the code, feel free to try our \nUpsource\n. \nWe are using this for Team - Code-Reviews too. If you have any questions to the code, mark the part you are interested in and send this link to us with your questions.\n\n\nYoutrack\n\n\nFor the versionplanning and bugtracking we are using \n \n \nYoutrack - RapidPM - ProxyBuilder\n \n \n\n\n \n\n\n\nProject structure\n\n\nThe project-target is a Builder-Framework for creating different types of proxies. \nYou will find three main groups of proxies.\n\n\n\n\nDynamicProxies\n\n\nObjectAdapter\n\n\nStaticProxies", 
+            "title": "Projectinfos"
+        }, 
+        {
+            "location": "/projectinfos/#project-informations", 
+            "text": "This project is sponsored with OpenSource Licences from", 
+            "title": "Project - Informations"
+        }, 
+        {
+            "location": "/projectinfos/#teamcity", 
+            "text": "You can login as  guest  at  TeamCity  to see all build configurations and the actual\nstate of  develop-  and  master- branch.", 
+            "title": "TeamCity"
+        }, 
+        {
+            "location": "/projectinfos/#sonarcube", 
+            "text": "For the coverage and other metrics we are using our  SonarCube  installation. Feel free to check it.", 
+            "title": "SonarCube"
+        }, 
+        {
+            "location": "/projectinfos/#versioneye", 
+            "text": "We are checking all dependencies with VersionEye. We try to use the latest versions \nfor all parts of the project.  master: \ndevelop:", 
+            "title": "VersionEye"
+        }, 
+        {
+            "location": "/projectinfos/#upsource", 
+            "text": "If you want to browse the code, feel free to try our  Upsource . \nWe are using this for Team - Code-Reviews too. If you have any questions to the code, mark the part you are interested in and send this link to us with your questions.", 
+            "title": "Upsource"
+        }, 
+        {
+            "location": "/projectinfos/#youtrack", 
+            "text": "For the versionplanning and bugtracking we are using      Youtrack - RapidPM - ProxyBuilder", 
+            "title": "Youtrack"
+        }, 
+        {
+            "location": "/projectinfos/#project-structure", 
+            "text": "The project-target is a Builder-Framework for creating different types of proxies. \nYou will find three main groups of proxies.   DynamicProxies  ObjectAdapter  StaticProxies", 
+            "title": "Project structure"
+        }, 
+        {
+            "location": "/additionalinfos/", 
+            "text": "Additional Infos\n\n\nIf you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.\n\n\nJava One 2015\n\n\n \n\n\n\n \n \nJavaOne 2015 Tutorial - Proxy DeepDive\n \n from \nSven Ruppert\n \n\n\n\n\n(soon) a free gitbook about Pattern and more \nJava Fundamentals in english\n\n\n\n\nDynamic Proxies\n\n\nThe book \nDynamic Proxies\n from \nDr. Heinz Kabutz\n and \nSven Ruppert\n\n\nJava Fundamentals\n\n\nA free german gitbook about Pattern and more \nJava Fundamentals", 
+            "title": "Additional Infos"
+        }, 
+        {
+            "location": "/additionalinfos/#additional-infos", 
+            "text": "If you want to have an overview of the Proxy-Pattern itself I can recommend\nthe following sources.", 
+            "title": "Additional Infos"
+        }, 
+        {
+            "location": "/additionalinfos/#java-one-2015", 
+            "text": "JavaOne 2015 Tutorial - Proxy DeepDive    from  Sven Ruppert     (soon) a free gitbook about Pattern and more  Java Fundamentals in english", 
+            "title": "Java One 2015"
+        }, 
+        {
+            "location": "/additionalinfos/#dynamic-proxies", 
+            "text": "The book  Dynamic Proxies  from  Dr. Heinz Kabutz  and  Sven Ruppert", 
+            "title": "Dynamic Proxies"
+        }, 
+        {
+            "location": "/additionalinfos/#java-fundamentals", 
+            "text": "A free german gitbook about Pattern and more  Java Fundamentals", 
+            "title": "Java Fundamentals"
         }, 
         {
             "location": "/about/", 
