@@ -130,13 +130,9 @@
         
             <li><a href="#virtualproxy">VirtualProxy</a></li>
         
-            <li><a href="#addmetrics">AddMetrics</a></li>
+            <li><a href="#preaction-postaction">PreAction -- PostAction</a></li>
         
             <li><a href="#methodscoped">MethodScoped</a></li>
-        
-            <li><a href="#preaction">PreAction</a></li>
-        
-            <li><a href="#postaction">PostAction</a></li>
         
     
     </ul>
@@ -148,13 +144,92 @@
 The official documentation/API-Doc for JDK8 you can find 
 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html">here</a></p>
 <p>To create Proxies based on the DynamicProxy you have to add the following dependencies to your project.
-'''xml</p>
-<p>'''</p>
+'''xml
+ <dependency>
+      <groupId>org.rapidpm.proxybuilder</groupId>
+      <artifactId>rapidpm-proxybuilder-modules-dynamic</artifactId>
+      <version>${rapidpm.version}</version>
+    </dependency>
+'''</p>
+<p>If you are working with this kind of Proxies, you need always an interface. If you don´t have an interface in your code and you could not create one, you have to use the <strong><em>StaticVirtualProxies</em></strong>.</p>
 <h2 id="virtualproxy">VirtualProxy<a class="headerlink" href="#virtualproxy" title="Permanent link">&para;</a></h2>
-<h2 id="addmetrics">AddMetrics<a class="headerlink" href="#addmetrics" title="Permanent link">&para;</a></h2>
-<h2 id="methodscoped">MethodScoped<a class="headerlink" href="#methodscoped" title="Permanent link">&para;</a></h2>
-<h2 id="preaction">PreAction<a class="headerlink" href="#preaction" title="Permanent link">&para;</a></h2>
-<h2 id="postaction">PostAction<a class="headerlink" href="#postaction" title="Permanent link">&para;</a></h2></div>
+<h4 id="pure-virtualproxy">pure VirtualProxy<a class="headerlink" href="#pure-virtualproxy" title="Permanent link">&para;</a></h4>
+<pre><code class="java">final DemoLogic original = new DemoLogic();
+final DemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(DemoInterface.class, original)
+        .build();
+</code></pre>
+
+<p>With this you can generate at runtime a <strong><em>VirtualProxy</em></strong> based on the <strong><em>DynamicProxy</em></strong>. This you can use beginning from Java 1.3 if you need it. (You have to backport the code by yourself, but we would liek to add this as legacy module) The Sourcelevel we are using in this project is Java8.</p>
+<h4 id="security-proxy">Security Proxy<a class="headerlink" href="#security-proxy" title="Permanent link">&para;</a></h4>
+<pre><code class="java">final DemoLogic original = new DemoLogic();
+final DemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(DemoInterface.class, original)
+        .addSecurityRule(() -&gt; false)
+        .build();
+</code></pre>
+
+<p>This is a SecureVirtalProxy. The Security-Rules are invoked before the VirtualProxy ist activated. This means, the real Subject will be created after the first time all SecurityRules are OK. </p>
+<pre><code class="java">final InnerDemoClass original = new InnerDemoClass();
+    final InnerDemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(InnerDemoInterface.class, original)
+        .addSecurityRule(() -&gt; true)
+        .addSecurityRule(() -&gt; true)
+        .addSecurityRule(() -&gt; false)
+        .build();
+</code></pre>
+
+<h4 id="metrics-proxy">Metrics Proxy<a class="headerlink" href="#metrics-proxy" title="Permanent link">&para;</a></h4>
+<p>If you need the possibility to get Metrics out of your application, you could create a MetricsProxy. In this example we are creating a pure <strong><em>MetricsProxy</em></strong> you could do the following.</p>
+<pre><code class="java">    final InnerDemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(InnerDemoInterface.class, new InnerDemoClass())
+        .addMetrics()
+        .build();
+
+</code></pre>
+
+<p>You could combine this with a <strong><em>VirtualProxy</em></strong> to get a <strong><em>VirtualMetricsProxy</em></strong></p>
+<pre><code class="java">    final Service service = DynamicProxyBuilder
+        .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
+        .addMetrics()
+        .build();
+
+</code></pre>
+
+<h2 id="preaction-postaction">PreAction -- PostAction<a class="headerlink" href="#preaction-postaction" title="Permanent link">&para;</a></h2>
+<p>Sometime you want to have the possibility to do something before or after a Methodinvocation. For this we have the 
+<strong><em>PreAction</em></strong> and <strong><em>PostAction</em></strong>. The Acions are executed in the order they are added to the Proxy.</p>
+<pre><code class="java">    final Service service = DynamicProxyBuilder
+        .createBuilder(Service.class, new ServiceImpl())
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;001 = &quot; + method.getName()))
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;002 = &quot; + method.getName()))
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;003 = &quot; + method.getName()))
+        .build();
+</code></pre>
+
+<p>A <strong><em>VirtualProxy</em></strong> with <strong><em>PreActions</em></strong> will lead to the execution of all <strong>*PreActions</strong> before the realSubject will be created. </p>
+<pre><code class="java">    final Service service = DynamicProxyBuilder
+        .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;001 = &quot; + method.getName()))
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;002 = &quot; + method.getName()))
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;003 = &quot; + method.getName()))
+        .build();
+</code></pre>
+
+<p>If you combine it with a <strong><em>SecurityVirtualProxy</em></strong> with <strong><em>PreActions</em></strong> the Security-Rule will be invoced first.</p>
+<pre><code class="java">    final Service service = DynamicProxyBuilder
+        .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;001 = &quot; + method.getName()))
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;002 = &quot; + method.getName()))
+        .addIPreAction((original, method, args1) -&gt; out.println(&quot;003 = &quot; + method.getName()))
+        .addSecurityRule(() -&gt; {
+          out.println(&quot;sec 001&quot;);
+          return true;
+        })
+        .build();
+</code></pre>
+
+<h2 id="methodscoped">MethodScoped<a class="headerlink" href="#methodscoped" title="Permanent link">&para;</a></h2></div>
             
         </div>
 
