@@ -1,7 +1,13 @@
 site_name: ProxyBuilder
 pages:
 - Home: index.md
+- DynamicProxy: dynamicproxy/index.md
+- ObjectAdapter: objectadapter/index.md
+- StaticProxy: staticproxy/index.md
+- Projectinfos: projectinfos/index.md
+- Additional Infos: additionalinfos/index.md
 - About: about.md
+
 #theme: readthedocs
 #markdown_extensions: [fenced_code]
 markdown_extensions:

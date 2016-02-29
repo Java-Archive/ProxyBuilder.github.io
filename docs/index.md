@@ -1,65 +1,180 @@
 # Welcome to ProxyBuilder
 
-For full documentation visit [mkdocs.org](http://mkdocs.org).
+Here we will describe the ProxyBuilder from [github.com/ProxyBuilder/proxybuilder](https://github.com/ProxyBuilder/proxybuilder)
 
-Abstracts for the Conf.
+## What are Proxies ?
+If you want to have an overview of the Proxy-Pattern itself I can recommend
+the following sources.
 
-#IoT-Workshop
-## Industrial Prototyping with Java 8 and TinkerForge
-TinkerForge is a very simple, easy-to-handle modular electronic system. Depending on the application, a system of sensor, wireless and motor control elements can be built in a modular way and programmed with a few lines of code. No soldering iron is needed. Both the hardware and the software are open source. After a brief overview of the available sensors and actuators, we will quickly start with the actual programming. Together, we will explore different applications, architectures, and the combination of TinkerForge with Java. Using sensors, actuators and some other elements, we will take the first steps and delve into the practical world of IoT with Java 8 and TinkerForge. 
+<iframe src="//de.slideshare.net/slideshow/embed_code/key/qOl1Sz53XkmKTh" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//de.slideshare.net/svenruppert/proxy-deepdive-javaone20151027001" title="JavaOne 2015 Tutorial - Proxy DeepDive" target="_blank">JavaOne 2015 Tutorial - Proxy DeepDive</a> </strong> from <strong><a target="_blank" href="//de.slideshare.net/svenruppert">Sven Ruppert</a></strong> </div>
 
-What do I need to bring?
+## What goal we want to reach?
+This project was born, because I had to work a lot with old hughe projects. The only thing I could relay on, is the pure JDK.
+So I started playing with different DesignPatterns and figured out, that Proxies are one of the most powerfull patterngroup for me.
+During the time I was writing the german Book ***"Dynamic Proxies"*** with [Dr. Heinz Kabutz](http://www.javaspecialists.eu/) I started to write examples. Step by step the examples are more generic and the ***ProxyBuilder*** - project was born. 
 
-* A laptop on which you can install software
-* Java 8 (JDK) installed and running
-* A JDK 8 capable IDE
+## Some Examples
+To have an ideaw hat you could do with the ***ProxyBuilder*** I will show here some examples. The more detailed 
+informations you can find in the special sections of this website. This project is based on ***Java8***.
 
-Optionally, you can of course also bring your own Raspberry Pi or the like.
+### Some Examples with DynamicProxies
+Here are some examples based on the ***DynamicProxy***. But we have created ***generated static*** versions too...
+#### Virtual Proxy
+```java
+final DemoLogic original = new DemoLogic();
+final DemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(DemoInterface.class, original)
+        .build();
+```
 
-Goals:
-
-* addressing sensors, storing data and display them using JavaFX.
-* (opt) parallel processing of sensor data streams using Java 8 Streams
-* using touch elements
-
+#### Security Proxy
+```java
+final DemoLogic original = new DemoLogic();
+final DemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(DemoInterface.class, original)
+        .addSecurityRule(() -> false)
+        .build();
+```
 
 
 ```java
+final InnerDemoClass original = new InnerDemoClass();
+    final InnerDemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(InnerDemoInterface.class, original)
+        .addSecurityRule(() -> true)
+        .addSecurityRule(() -> true)
+        .addSecurityRule(() -> false)
+        .build();
+```
 
-@Test
-  public void test004() throws Exception {
-    final ServiceHandle<BusinessService> serviceHandle = locator.getServiceHandle(BusinessService.class);
-    final BusinessService myService = serviceHandle.getService();
-    Assert.assertNotNull(myService);
+#### Metrics Proxy
+```java
+    final InnerDemoClass original = new InnerDemoClass();
+    final InnerDemoInterface demoLogic = VirtualProxyBuilder
+        .createBuilder(InnerDemoInterface.class, original)
+        .addMetrics()
+        .build();
 
-    Assert.assertEquals(myService.getClass(), BusinessServiceImplA.class);
-    System.out.println("myService.doWork(\"h\") = " + myService.doWork("h"));
+```
 
-    final Object serviceData = serviceHandle.getServiceData();
-    System.out.println("serviceData = " + serviceData);
+## How to bootstrap your project?
+If you want to be as near as possible at the actual development version, you could use this. If you need a more stable version
+change the version numbers to the last stable one.
 
+If you want to start with the ***DynamicProxyBuilder*** creating for example ***VirtualProxies*** bundled with some other things
+you need the following dep in your pom.xml.
 
+```xml
+    <dependency>
+      <groupId>org.rapidpm.proxybuilder</groupId>
+      <artifactId>rapidpm-proxybuilder-modules-dynamic</artifactId>
+      <version>${rapidpm.version}</version>
+    </dependency>
+```
+
+The ***ProxyBuilder*** includes the ***Kotlin*** runtime libs and ***Metrics*** from Dropwizard. 
+
+### VirtualProxy with one PreAction
+This will be a ***VirtualProxy*** with a ***PreAction***. You can add as many ***PreActions*** as you need. 
+Every ***PreAction*** will be executed before every method invokation in the order the ***PreAction*** was added.
+
+```java
+public class ProxyDemoV001 {
+
+  public static void main(String[] args) {
+  
+    final Service service = DynamicProxyBuilder
+        .createBuilder(Service.class, new ServiceImpl())
+        .addIPreAction((original, method, args1) 
+                        -> System.out.println(" PreAction = " + System.nanoTime()))
+        .build();
+  
+    System.out.println("proxy created " + System.nanoTime());
+    System.out.println("s = " + service.doWork("Go.."));
   }
+
+  public interface Service {
+    String doWork(String str);
+  }
+
+  public static class ServiceImpl implements Service {
+    public ServiceImpl() {
+      System.out.println(" ServiceImpl => constructor... " + System.nanoTime());
+    }
+
+    @Override
+    public String doWork(final String str) {
+      return str + " orig..";
+    }
+  }
+
+}
+
+```
+
+### VirtualProxy with Metrics
+
+```java
+public class ProxyDemoV002 {
+
+  public static void main(String[] args) {
+    RapidPMMetricsRegistry.getInstance().startConsoleReporter();
+    
+    final Service service = DynamicProxyBuilder
+        .createBuilder(Service.class, new ServiceImpl())
+        .addMetrics()
+        .build();
+        
+    System.out.println("proxy created " + System.nanoTime());
+    final long count = IntStream.range(0, 10_000_000)
+        .boxed()
+        .map(i -> service.doWork("Go.." + i))
+        .count();
+    System.out.println("s = " + service.doWork("Go.."));
+    System.out.println("count = " + count);
+  }
+
+
+  public interface Service {
+    String doWork(String str);
+  }
+
+  public static class ServiceImpl implements Service {
+    public ServiceImpl() {
+      System.out.println(" ServiceImpl => constructor... " + System.nanoTime());
+    }
+    @Override
+    public String doWork(final String str) {
+      return str + " orig..";
+    }
+  }
+}
 ```
 
 
 
+To bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central.  
+Here our ***TeamCity*** will push regularly the binaryies. 
+If you are using maven you could add the following to your ***settings.xml*** to get the snapshots that are available at maven-central. 
 
-
-#Talks
-## Proxy Deep Dive
-At this talk we will start from the basics and come shortly to Dynamic-/Static-Proxies, generated typesave DynamicObjectAdapter, ProxyBuilder and more. How we could combine this with with an other language like kotlin? We will have a deep dive to this pattern group , and I am sure you will like it ;-) 
-
-This talk is an extension of the german book "Dynamic Proxies" written from Dr. Heinz Kabutz and me.
-
-## From jUnit to Mutation Testing
-JUnit is a well-known tool for java developers in the area of TDD. Here it has become accepted, that CodeCoverage can be measured. In this case we distinguish between coverage on the level of classes, methods and rows. The goal is to get the CodeCoverage as high as possible on the row level, but not higher than necessary.
-What exactly does it mean? A CodeCoverage of appr. 75% on the row level is very good and can already provide a basis. But what does this figure say?
- 
-In this talk we will deal with the term Mutation Testing and show the practical ways of use. How can the coverage be defined and what can be achieved?
-How can it be integrated into an existing project and what should be considered while running a test?
-
-## DI and CDI frameworks internals
-Dependency Injection is now part of nearly every Java project. But what is the difference between DI and CDI. How to decide what I could use better, what  frameworks are available and what are the differences for me as a programmer? What could be an option for the IoT-, Desktop- or Webproject?
-
-In this talk we will get an overview over different frameworks and how they are working. We are not checking the well known big one only, but we are looking at some small sometimes specialized implementations.
+```xml
+   <profile>
+      <id>allow-snapshots</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>snapshots-repo</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+``` 
