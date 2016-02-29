@@ -132,7 +132,7 @@
         
             <li><a href="#preaction-postaction">PreAction -- PostAction</a></li>
         
-            <li><a href="#methodscoped">MethodScoped</a></li>
+            <li><a href="#creationstrategies">CreationStrategies</a></li>
         
     
     </ul>
@@ -229,7 +229,95 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .build();
 </code></pre>
 
-<h2 id="methodscoped">MethodScoped<a class="headerlink" href="#methodscoped" title="Permanent link">&para;</a></h2></div>
+<h2 id="creationstrategies">CreationStrategies<a class="headerlink" href="#creationstrategies" title="Permanent link">&para;</a></h2>
+<p>With the <strong><em>CreateionStrategies</em></strong> you can choos what will be the right way of synchronization for you if you are using <strong><em>VirtualProxies</em></strong>. You can implement some other by yourself, if needed. With <strong><em>CreationStrategies</em></strong> you can do different things. Not only the creation of one Element is possible, you can f.e. create a pool of instances used randomly
+ or you can do something like <strong><em>MethodScoped</em></strong>. </p>
+<h3 id="methodscoped">MethodScoped<a class="headerlink" href="#methodscoped" title="Permanent link">&para;</a></h3>
+<p>This <strong><em>CreationStrategy</em></strong> will create for every method invocation a new instance.</p>
+<pre><code class="java">public class ServiceStrategyFactoryMethodScoped&lt;T&gt; implements ServiceStrategyFactory&lt;T&gt; {
+
+  @Override
+  public synchronized T realSubject(ServiceFactory&lt;T&gt; factory) {
+    return factory.createInstance();
+  }
+}
+</code></pre>
+
+<h3 id="none">NONE<a class="headerlink" href="#none" title="Permanent link">&para;</a></h3>
+<p>If you choose nothing or <strong><em>CreationStrategy.NONE</em></strong> you will get the <strong><em>NotThreadSafe</em></strong> version.</p>
+<pre><code class="java">public class ServiceStrategyFactoryNotThreadSafe&lt;T&gt; implements ServiceStrategyFactory&lt;T&gt; {
+
+  private T service;
+
+  @Override
+  public T realSubject(ServiceFactory&lt;T&gt; factory) {
+    if (service == null) {
+      service = factory.createInstance();
+    }
+    return service;
+  }
+
+}
+</code></pre>
+
+<h3 id="someduplicates">SomeDuplicates<a class="headerlink" href="#someduplicates" title="Permanent link">&para;</a></h3>
+<pre><code class="java">public class ServiceStrategyFactorySomeDuplicates&lt;T&gt; implements ServiceStrategyFactory&lt;T&gt; {
+  private final AtomicReference&lt;T&gt; ref = new AtomicReference&lt;&gt;();
+
+  @Override
+  public T realSubject(ServiceFactory&lt;T&gt; factory) {
+
+    T service = ref.get();
+    if (service == null) {
+      service = factory.createInstance();
+      if (!ref.compareAndSet(null, service)) {
+        service = ref.get();
+      }
+    }
+    return service;
+  }
+}
+</code></pre>
+
+<h3 id="synchronized">Synchronized<a class="headerlink" href="#synchronized" title="Permanent link">&para;</a></h3>
+<pre><code class="java">public class ServiceStrategyFactorySynchronized&lt;T&gt; implements ServiceStrategyFactory&lt;T&gt; {
+
+  private T service;
+
+  @Override
+  public synchronized T realSubject(ServiceFactory&lt;T&gt; factory) {
+    if (service == null) {
+      service = factory.createInstance();
+    }
+    return service;
+  }
+}
+</code></pre>
+
+<h3 id="noduplicates">NoDuplicates<a class="headerlink" href="#noduplicates" title="Permanent link">&para;</a></h3>
+<pre><code class="java">public class ServiceStrategyFactoryNoDuplicates&lt;T&gt; implements ServiceStrategyFactory&lt;T&gt; {
+
+  private final Lock initializationLock = new ReentrantLock();
+  private volatile T realSubject;
+
+  @Override
+  public T realSubject(ServiceFactory&lt;T&gt; factory) {
+    T result = realSubject;
+    if (result == null) {
+      initializationLock.lock();
+      try {
+        result = realSubject;
+        if (result == null) {
+          result = realSubject = factory.createInstance();
+        }
+      } finally {
+        initializationLock.unlock();
+      }
+    }
+    return result;
+  }
+}
+</code></pre></div>
             
         </div>
 
