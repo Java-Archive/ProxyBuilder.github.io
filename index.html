@@ -150,11 +150,11 @@ the following sources.</p>
 
 <p><div style="margin-bottom:5px"> <strong> <a href="//de.slideshare.net/svenruppert/proxy-deepdive-javaone20151027001" title="JavaOne 2015 Tutorial - Proxy DeepDive" target="_blank">JavaOne 2015 Tutorial - Proxy DeepDive</a> </strong> from <strong><a target="_blank" href="//de.slideshare.net/svenruppert">Sven Ruppert</a></strong> </div></p>
 <h2 id="what-goal-we-want-to-reach">What goal we want to reach?<a class="headerlink" href="#what-goal-we-want-to-reach" title="Permanent link">&para;</a></h2>
-<p>This project was born, because I had to work a lot with old hughe projects. The only thing I could relay on, is the pure JDK.
+<p>This project was born, because I had to work a lot with old huge projects. The only thing I could relay on, is the pure JDK.
 So I started playing with different DesignPatterns and figured out, that Proxies are one of the most powerfull patterngroup for me.
 During the time I was writing the german Book <strong><em>"Dynamic Proxies"</em></strong> with <a href="http://www.javaspecialists.eu/">Dr. Heinz Kabutz</a> I started to write examples. Step by step the examples are more generic and the <strong><em>ProxyBuilder</em></strong> - project was born. </p>
 <h2 id="some-examples">Some Examples<a class="headerlink" href="#some-examples" title="Permanent link">&para;</a></h2>
-<p>To have an ideaw hat you could do with the <strong><em>ProxyBuilder</em></strong> I will show here some examples. The more detailed 
+<p>To have an idea what you could do with the <strong><em>ProxyBuilder</em></strong> I will show here some examples. The more detailed 
 informations you can find in the special sections of this website. This project is based on <strong><em>Java8</em></strong>.</p>
 <h3 id="some-examples-with-dynamicproxies">Some Examples with DynamicProxies<a class="headerlink" href="#some-examples-with-dynamicproxies" title="Permanent link">&para;</a></h3>
 <p>Here are some examples based on the <strong><em>DynamicProxy</em></strong>. But we have created <strong><em>generated static</em></strong> versions too...</p>
@@ -206,7 +206,7 @@ you need the following dep in your pom.xml.</p>
 <p>The <strong><em>ProxyBuilder</em></strong> includes the <strong><em>Kotlin</em></strong> runtime libs and <strong><em>Metrics</em></strong> from Dropwizard. </p>
 <h3 id="virtualproxy-with-one-preaction">VirtualProxy with one PreAction<a class="headerlink" href="#virtualproxy-with-one-preaction" title="Permanent link">&para;</a></h3>
 <p>This will be a <strong><em>VirtualProxy</em></strong> with a <strong><em>PreAction</em></strong>. You can add as many <strong><em>PreActions</em></strong> as you need. 
-Every <strong><em>PreAction</em></strong> will be executed before every method invokation in the order the <strong><em>PreAction</em></strong> was added.</p>
+Every <strong><em>PreAction</em></strong> will be executed before every method invocation in the order the <strong><em>PreAction</em></strong> was added.</p>
 <pre><code class="java">public class ProxyDemoV001 {
 
   public static void main(String[] args) {
@@ -278,7 +278,7 @@ Every <strong><em>PreAction</em></strong> will be executed before every method i
 </code></pre>
 
 <p>To bootstrap your project with the latest SNAPSHOT you need to add the SNAPSHOT-repository that is available at maven - central.<br />
-Here our <strong><em>TeamCity</em></strong> will push regularly the binaryies. 
+Here our <strong><em>TeamCity</em></strong> will push regularly the binaries. 
 If you are using maven you could add the following to your <strong><em>settings.xml</em></strong> to get the snapshots that are available at maven-central. </p>
 <pre><code class="xml">   &lt;profile&gt;
       &lt;id&gt;allow-snapshots&lt;/id&gt;
@@ -346,5 +346,5 @@ If you are using maven you could add the following to your <strong><em>settings.
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2016-02-29 15:18:21.255321
+Build Date UTC : 2016-03-02 09:54:15.451745
 -->
