@@ -128,9 +128,9 @@
     
         <li class="main active"><a href="#object-adapter">Object Adapter</a></li>
         
-            <li><a href="#what-we-are-doing-with-object-adapter">What we are doing with Object Adapter</a></li>
+            <li><a href="#dynamicobjectadapter">DynamicObjectAdapter</a></li>
         
-            <li><a href="#how-to-use-it">How to use it</a></li>
+            <li><a href="#staticobjectadapter">StaticObjectAdapter</a></li>
         
     
     </ul>
@@ -138,11 +138,9 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="object-adapter">Object Adapter<a class="headerlink" href="#object-adapter" title="Permanent link">&para;</a></h1>
-<p>IN this section we want to describe the ObjectAdapter Pattern that is realized in this module.</p>
-<h2 id="what-we-are-doing-with-object-adapter">What we are doing with Object Adapter<a class="headerlink" href="#what-we-are-doing-with-object-adapter" title="Permanent link">&para;</a></h2>
-<h2 id="how-to-use-it">How to use it<a class="headerlink" href="#how-to-use-it" title="Permanent link">&para;</a></h2>
-<p>We can use a dynamic and a statsic Verision of the <strong><em>ObjectAdapter</em></strong> Pattern. The dynamic version is based on the DynamicProxy from jdk1.3 and the static version is purely generated via Annotation Proxessing. </p>
-<h3 id="dynamic">Dynamic<a class="headerlink" href="#dynamic" title="Permanent link">&para;</a></h3>
+<p>IN this section we want to describe the ObjectAdapter Pattern that is realized in this module.
+We can use a dynamic and a statsic Verision of the <strong><em>ObjectAdapter</em></strong> Pattern. The dynamic version is based on the DynamicProxy from jdk1.3 and the static version is purely generated via Annotation Proxessing. </p>
+<h2 id="dynamicobjectadapter">DynamicObjectAdapter<a class="headerlink" href="#dynamicobjectadapter" title="Permanent link">&para;</a></h2>
 <p>If you want to us the <strong><em>DynamicObjectAdapter</em></strong> you need at leased one Interface you can cast to. To ceate the <strong><em>DynamicObjectAdapter</em></strong> you can use the Annotation <strong><em>@DynamicObjectAdapterBuilder</em></strong>. This will create via Annotation Processing the <strong><em>DynamicObjectAdapter</em></strong> and the corresponding <strong><em>Builder</em></strong> that you can use for convinience and type safty. Let´s asume you have the folliwing interface. <strong><em>Service</em></strong></p>
 <pre><code class="java">@DynamicObjectAdapterBuilder
 public interface Service {
@@ -232,8 +230,42 @@ You will get a FunctionalInterface for every Method declared in your interface, 
     .buildForTarget(Service.class);
 </code></pre>
 
-<h3 id="static">static<a class="headerlink" href="#static" title="Permanent link">&para;</a></h3>
-<p>If you want, you can use the static ObjectAdapter nearly in the same way. But here you will get no Builder. You only will get the functional interfaces and the Adapter itself.</p></div>
+<h2 id="staticobjectadapter">StaticObjectAdapter<a class="headerlink" href="#staticobjectadapter" title="Permanent link">&para;</a></h2>
+<p>If you want, you can use the static ObjectAdapter nearly in the same way. But here you will get no Builder. You only will get the functional interfaces and the Adapter itself. Add the Annotation <strong><em>@StaticObjectAdapter</em></strong> to an Interface or Class.</p>
+<pre><code class="java">@StaticObjectAdapter
+public interface Service {
+  String doWork(String txt);
+  String doMoreWorkA(String txt);
+  String doMoreWorkB(String txt);
+  String doMoreWorkC(String txt);
+  String doMoreWorkD(String txt);
+}
+</code></pre>
+
+<p>After a <strong><em>mvn clean compile</em></strong> you will get the Functionalinterfaces and the StaticObjectAdapter itself.</p>
+<pre><code class="java">final Service service = new ServiceStaticObjectAdapter()
+        .withService(new ServiceImpl())
+        .withServiceMethodDoMoreWorkC(new ServiceMethodDoMoreWorkC() {
+          @Override
+          public String doMoreWorkC(final String txt) {
+            return &quot;mocked&quot;;
+          }
+        })
+        .withServiceMethodDoMoreWorkD(new ServiceMethodDoMoreWorkD() {
+          @Override
+          public String doMoreWorkD(final String txt) {
+            return &quot;mocked&quot;;
+          }
+        });
+
+</code></pre>
+
+<p>And here again, you can write it with short Lambda-syntax.</p>
+<pre><code class="java">final Service service = new ServiceStaticObjectAdapter()
+        .withService(new ServiceImpl())
+        .withServiceMethodDoMoreWorkC(txt -&gt; &quot;mocked&quot;)
+        .withServiceMethodDoMoreWorkD(txt -&gt; &quot;mocked&quot;);
+</code></pre></div>
             
         </div>
 
