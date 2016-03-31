@@ -5,13 +5,13 @@ The official documentation/API-Doc for JDK8 you can find
 [here](http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html)
 
 To create Proxies based on the DynamicProxy you have to add the following dependencies to your project.
-'''xml
+```xml
  <dependency>
       <groupId>org.rapidpm.proxybuilder</groupId>
       <artifactId>rapidpm-proxybuilder-modules-dynamic</artifactId>
       <version>${rapidpm.version}</version>
     </dependency>
-'''
+```
 
 If you are working with this kind of Proxies, you need always an interface. If you don´t have an interface in your code and you could not create one, you have to use the ***StaticVirtualProxies***.
 
@@ -24,7 +24,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .createBuilder(DemoInterface.class, original)
         .build();
 ```
-With this you can generate at runtime a ***VirtualProxy*** based on the ***DynamicProxy***. This you can use beginning from Java 1.3 if you need it. (You have to backport the code by yourself, but we would liek to add this as legacy module) The Sourcelevel we are using in this project is Java8.
+With this you can generate at runtime a ***VirtualProxy*** based on the ***DynamicProxy***. This you can use beginning from Java 1.3 if you need it (You have to backport the code by yourself, but we would like to add this as legacy module). The sourcelevel we are using in this project is Java8.
 
 #### Security Proxy
 ```java
@@ -34,8 +34,8 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .addSecurityRule(() -> false)
         .build();
 ```
-This is a SecureVirtalProxy. The Security-Rules are invoked before the VirtualProxy ist activated. This means, the real Subject will be created after the first time all SecurityRules are OK. 
-
+This is a SecureVirtualProxy. The Security-Rules are invoked before the VirtualProxy ist activated. This means, the real Subject will not be created unless all SecurityRules are OK. 
+Here`s an example for multiple SecurityRules:
 ```java
 final InnerDemoClass original = new InnerDemoClass();
     final InnerDemoInterface demoLogic = VirtualProxyBuilder
@@ -48,28 +48,26 @@ final InnerDemoClass original = new InnerDemoClass();
 
 #### Metrics Proxy
 
-If you need the possibility to get Metrics out of your application, you could create a MetricsProxy. In this example we are creating a pure ***MetricsProxy*** you could do the following.
+If you need the possibility to get Metrics out of your application, you could create a MetricsProxy. In this example we are creating a pure ***MetricsProxy***. You could do the following:
 
 ```java
     final InnerDemoInterface demoLogic = VirtualProxyBuilder
         .createBuilder(InnerDemoInterface.class, new InnerDemoClass())
         .addMetrics()
         .build();
-
 ```
- You could combine this with a ***VirtualProxy*** to get a ***VirtualMetricsProxy***
+ You also can combine this with a ***VirtualProxy*** to get a ***VirtualMetricsProxy***
 
 ```java
     final Service service = DynamicProxyBuilder
         .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
         .addMetrics()
         .build();
-
 ```
 
 ## PreAction -- PostAction
-Sometime you want to have the possibility to do something before or after a Methodinvocation. For this we have the 
-***PreAction*** and ***PostAction***. The Acions are executed in the order they are added to the Proxy.
+Sometimes you want to have the possibility to do something before or even after a method invocation. For this we have the 
+***PreAction*** and ***PostAction***. The Actions are executed in the order they are added to the Proxy.
 
 ```java
     final Service service = DynamicProxyBuilder
@@ -80,7 +78,7 @@ Sometime you want to have the possibility to do something before or after a Meth
         .build();
 ```
 
-A ***VirtualProxy*** with ***PreActions*** will lead to the execution of all ***PreActions** before the realSubject will be created. 
+A ***VirtualProxy*** with ***PreActions*** will lead to the execution of all ***PreActions** before the real subject is created. 
 
 ```java
     final Service service = DynamicProxyBuilder
@@ -91,7 +89,7 @@ A ***VirtualProxy*** with ***PreActions*** will lead to the execution of all ***
         .build();
 ```
 
-If you combine it with a ***SecurityVirtualProxy*** with ***PreActions*** the Security-Rule will be invoced first.
+If you combine it with a ***SecurityVirtualProxy*** with ***PreActions*** the SecurityRule will be invoked first.
 
 ```java
     final Service service = DynamicProxyBuilder
@@ -107,7 +105,7 @@ If you combine it with a ***SecurityVirtualProxy*** with ***PreActions*** the Se
 ```
 
 ## CreationStrategies
-With the ***CreateionStrategies*** you can choos what will be the right way of synchronization for you if you are using ***VirtualProxies***. You can implement some other by yourself, if needed. With ***CreationStrategies*** you can do different things. Not only the creation of one Element is possible, you can f.e. create a pool of instances used randomly
+With the ***CreationStrategies*** you can choose what will be the right way of synchronization for you in case you are using ***VirtualProxies***. If needed, you can implement others by yourself. With ***CreationStrategies*** you can do different things. Not only the creation of one element is possible, you can f.e. create a pool of instances used randomly
  or you can do something like ***MethodScoped***. 
 
 ### MethodScoped
