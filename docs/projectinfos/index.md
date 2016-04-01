@@ -18,9 +18,9 @@ We are checking all dependencies with VersionEye. We try to use the latest versi
 for all parts of the project.
 
 master:
-[![Dependency Status](https://www.versioneye.com/user/projects/55a3ab9532393900210005cc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55a3ab9532393900210005cc)
+[![Dependency Status](https://www.versioneye.com/user/projects/56d6b7a4d71695003886bc89/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56d6b7a4d71695003886bc89)
 develop:
-[![Dependency Status](https://www.versioneye.com/user/projects/55a3ab9a32393900170005be/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55a3ab9a32393900170005be)
+[![Dependency Status](https://www.versioneye.com/user/projects/56d6b7a0d716950040a0e9b8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56d6b7a0d716950040a0e9b8)
 
 ## Upsource
 If you want to browse the code, feel free to try our [Upsource](http://78.47.219.191/rapidpm-proxybuilder/view). 
