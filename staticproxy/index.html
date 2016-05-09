@@ -136,6 +136,8 @@
         
             <li><a href="#static-generated-metricsproxy">Static Generated MetricsProxy</a></li>
         
+            <li><a href="#static-generated-loggingproxy">Static Generated LoggingProxy</a></li>
+        
             <li><a href="#static-runtime-virtualproxy">Static Runtime VirtualProxy</a></li>
         
             <li><a href="#static-runtime-metricsproxy">Static Runtime MetricsProxy</a></li>
@@ -201,6 +203,85 @@ every Methodcall will be counted by DropwizardMetrics. For Every Method, you wil
         });
 </code></pre>
 
+<h2 id="static-generated-loggingproxy">Static Generated LoggingProxy<a class="headerlink" href="#static-generated-loggingproxy" title="Permanent link">&para;</a></h2>
+<p>Quite often I could find source code like the following.</p>
+<pre><code class="java">public void doWork(String str){
+    logger.debug(&quot;doWork -&gt; &quot; + str);
+    //some work....
+}
+</code></pre>
+
+<p>The target is a logging of the methodcalls and the values. OK, we don´t want to discuss why or why not. But if you have to do it, you could
+now use the <strong><em>LoggingProxy</em></strong>. The Logging is implemented with <strong><em>slf4j</em></strong>. Every method call will be logged with 
+the methodname, the name of the params and the param values itself. With this information you could find the corresponding source code very easy.</p>
+<p>Based on the following definition of a method...</p>
+<pre><code class="java">    public &lt;T extends List&gt; T unwrapList(final T type, final String str);
+</code></pre>
+
+<p>you will get an implementation like the follwoing.</p>
+<pre><code class="java">  public &lt;T extends List&gt; T unwrapList(final T type, final String str) {
+    if (logger.isInfoEnabled()) {
+      logger.info(&quot;delegator.unwrapList(type, str) values - &quot; + type + &quot; - &quot; + str);
+    }
+    T result = delegator.unwrapList(type, str);
+    return result;
+  }
+</code></pre>
+
+<p>This implementation will asume, that the values are using a proper <strong><em>toString()</em></strong> implementation itself.</p>
+<p>If you want to generate a StaticLoggingProxy, please add the Annotation <strong><em>@StaticLoggingProxy</em></strong> to the target class or interface.</p>
+<p>Here you will get the full example.</p>
+<pre><code class="java">@StaticLoggingProxy
+public interface MyLoggingInterface {
+  &lt;T extends List&gt; T unwrapList(T type, String str);
+}
+
+//generated code
+@Generated(
+    value = &quot;StaticLoggingProxyAnnotationProcessor&quot;,
+    date = &quot;2016-05-09T14:40:56.22&quot;,
+    comments = &quot;www.proxybuilder.org&quot;
+)
+@IsGeneratedProxy
+@IsLoggingProxy
+public class MyLoggingInterfaceStaticLoggingProxy implements MyLoggingInterface {
+  private static final Logger logger = getLogger(MyLoggingInterface.class);
+
+  private MyLoggingInterface delegator;
+
+  public MyLoggingInterfaceStaticLoggingProxy withDelegator(final MyLoggingInterface delegator) {
+    this.delegator = delegator;
+    return this;
+  }
+
+  public &lt;T extends List&gt; T unwrapList(final T type, final String str) {
+    if(logger.isInfoEnabled()) {
+      logger.info(&quot;delegator.unwrapList(type, str) values - &quot; + type + &quot; - &quot; + str);
+    }
+    T result = delegator.unwrapList(type, str);
+    return result;
+  }
+}
+
+// demo code usage
+public class MainV008 {
+  public static void main(String[] args) {
+    final MyLoggingInterface demo
+        = new MyLoggingInterfaceStaticLoggingProxy()
+        .withDelegator(new LoggerExample());
+    final List&lt;Integer&gt; list = demo.unwrapList(asList(1,2,3,4), &quot;AEAEA&quot;);
+  }
+
+  public static class LoggerExample implements MyLoggingInterface {
+    @Override
+    public &lt;T extends List&gt; T unwrapList(final T type, final String str) {
+      return null;
+    }
+  }
+}
+</code></pre>
+
+<p>The logging output will be <code>delegator.unwrapList(type, str) values - [1, 2, 3, 4] - AEAEA</code></p>
 <h2 id="static-runtime-virtualproxy">Static Runtime VirtualProxy<a class="headerlink" href="#static-runtime-virtualproxy" title="Permanent link">&para;</a></h2>
 <p>partly implemented until now.. stay tuned</p>
 <h2 id="static-runtime-metricsproxy">Static Runtime MetricsProxy<a class="headerlink" href="#static-runtime-metricsproxy" title="Permanent link">&para;</a></h2>
