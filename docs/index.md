@@ -9,13 +9,13 @@ the following sources.
 <iframe src="//de.slideshare.net/slideshow/embed_code/key/qOl1Sz53XkmKTh" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//de.slideshare.net/svenruppert/proxy-deepdive-javaone20151027001" title="JavaOne 2015 Tutorial - Proxy DeepDive" target="_blank">JavaOne 2015 Tutorial - Proxy DeepDive</a> </strong> from <strong><a target="_blank" href="//de.slideshare.net/svenruppert">Sven Ruppert</a></strong> </div>
 
 ## What goal we want to reach?
-This project was born, because I had to work a lot with old huge projects. The only thing I could relay on, is the pure JDK.
-So I started playing with different DesignPatterns and figured out, that Proxies are one of the most powerfull patterngroup for me.
+This project was born, because I had to work a lot with old huge projects. The only thing I could rely on, is the pure JDK.
+So I started playing with different Design Patterns and figured out, that Proxies are one of the most powerful pattern group for me.
 During the time I was writing the german Book ***"Dynamic Proxies"*** with [Dr. Heinz Kabutz](http://www.javaspecialists.eu/) I started to write examples. Step by step the examples are more generic and the ***ProxyBuilder*** - project was born. 
 
 ## Some Examples
 To have an idea what you could do with the ***ProxyBuilder*** I will show here some examples. The more detailed 
-informations you can find in the special sections of this website. This project is based on ***Java8***.
+information you can find in the special sections of this website. This project is based on ***Java8***.
 
 ### Some Examples with DynamicProxies
 Here are some examples based on the ***DynamicProxy***. But we have created ***generated static*** versions too...
@@ -62,7 +62,7 @@ If you want to be as near as possible at the actual development version, you cou
 change the version numbers to the last stable one.
 
 If you want to start with the ***DynamicProxyBuilder*** creating for example ***VirtualProxies*** bundled with some other things
-you need the following dep in your pom.xml.
+you need the following dependency in your pom.xml:
 
 ```xml
     <dependency>
