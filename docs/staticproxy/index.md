@@ -65,6 +65,92 @@ every Methodcall will be counted by DropwizardMetrics. For Every Method, you wil
         });
 ```
 
+## Static Generated LoggingProxy
+Quite often I could find source code like the following.
+```java
+public void doWork(String str){
+    logger.debug("doWork -> " + str);
+    //some work....
+}
+```
+
+The target is a logging of the methodcalls and the values. OK, we don´t want to discuss why or why not. But if you have to do it, you could
+now use the ***LoggingProxy***. The Logging is implemented with ***slf4j***. Every method call will be logged with 
+the methodname, the name of the params and the param values itself. With this information you could find the corresponding source code very easy.
+
+Based on the following definition of a method...
+```java
+    public <T extends List> T unwrapList(final T type, final String str);
+``` 
+you will get an implementation like the follwoing.
+
+```java
+  public <T extends List> T unwrapList(final T type, final String str) {
+    if (logger.isInfoEnabled()) {
+      logger.info("delegator.unwrapList(type, str) values - " + type + " - " + str);
+    }
+    T result = delegator.unwrapList(type, str);
+    return result;
+  }
+```
+
+This implementation will asume, that the values are using a proper ***toString()*** implementation itself.
+
+If you want to generate a StaticLoggingProxy, please add the Annotation ***@StaticLoggingProxy*** to the target class or interface.
+
+Here you will get the full example.
+```java
+@StaticLoggingProxy
+public interface MyLoggingInterface {
+  <T extends List> T unwrapList(T type, String str);
+}
+
+//generated code
+@Generated(
+    value = "StaticLoggingProxyAnnotationProcessor",
+    date = "2016-05-09T14:40:56.22",
+    comments = "www.proxybuilder.org"
+)
+@IsGeneratedProxy
+@IsLoggingProxy
+public class MyLoggingInterfaceStaticLoggingProxy implements MyLoggingInterface {
+  private static final Logger logger = getLogger(MyLoggingInterface.class);
+
+  private MyLoggingInterface delegator;
+
+  public MyLoggingInterfaceStaticLoggingProxy withDelegator(final MyLoggingInterface delegator) {
+    this.delegator = delegator;
+    return this;
+  }
+
+  public <T extends List> T unwrapList(final T type, final String str) {
+    if(logger.isInfoEnabled()) {
+      logger.info("delegator.unwrapList(type, str) values - " + type + " - " + str);
+    }
+    T result = delegator.unwrapList(type, str);
+    return result;
+  }
+}
+
+// demo code usage
+public class MainV008 {
+  public static void main(String[] args) {
+    final MyLoggingInterface demo
+        = new MyLoggingInterfaceStaticLoggingProxy()
+        .withDelegator(new LoggerExample());
+    final List<Integer> list = demo.unwrapList(asList(1,2,3,4), "AEAEA");
+  }
+
+  public static class LoggerExample implements MyLoggingInterface {
+    @Override
+    public <T extends List> T unwrapList(final T type, final String str) {
+      return null;
+    }
+  }
+}
+```
+
+The logging output will be ```delegator.unwrapList(type, str) values - [1, 2, 3, 4] - AEAEA```
 
 
 ## Static Runtime VirtualProxy
