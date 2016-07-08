@@ -143,7 +143,7 @@
 <p>Since jdk1.3 the DynamicProxy is part of the JDK. 
 The official documentation/API-Doc for JDK8 you can find 
 <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html">here</a></p>
-<p>To create Proxies based on the DynamicProxy you have to add the following dependencies to your project.
+<p>To create Proxies based on the DynamicProxy you have to add the following dependency to your project.
 '''xml
  <dependency>
       <groupId>org.rapidpm.proxybuilder</groupId>
@@ -160,7 +160,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .build();
 </code></pre>
 
-<p>With this you can generate at runtime a <strong><em>VirtualProxy</em></strong> based on the <strong><em>DynamicProxy</em></strong>. This you can use beginning from Java 1.3 if you need it. (You have to backport the code by yourself, but we would liek to add this as legacy module) The Sourcelevel we are using in this project is Java8.</p>
+<p>With this you can generate at runtime a <strong><em>VirtualProxy</em></strong> based on the <strong><em>DynamicProxy</em></strong>. This you can use beginning from Java 1.3 if you need it. (You have to backport the code by yourself, but we would like to add this as legacy module) The Sourcelevel we are using in this project is Java8.</p>
 <h4 id="security-proxy">Security Proxy<a class="headerlink" href="#security-proxy" title="Permanent link">&para;</a></h4>
 <pre><code class="java">final DemoLogic original = new DemoLogic();
 final DemoInterface demoLogic = VirtualProxyBuilder
@@ -169,7 +169,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .build();
 </code></pre>
 
-<p>This is a SecureVirtalProxy. The Security-Rules are invoked before the VirtualProxy ist activated. This means, the real Subject will be created after the first time all SecurityRules are OK. </p>
+<p>This is a SecureVirtalProxy. The SecurityRules are invoked before the VirtualProxy is activated. This means, the real Subject will be created after the first time all SecurityRules are OK. </p>
 <pre><code class="java">final InnerDemoClass original = new InnerDemoClass();
     final InnerDemoInterface demoLogic = VirtualProxyBuilder
         .createBuilder(InnerDemoInterface.class, original)
@@ -180,7 +180,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
 </code></pre>
 
 <h4 id="metrics-proxy">Metrics Proxy<a class="headerlink" href="#metrics-proxy" title="Permanent link">&para;</a></h4>
-<p>If you need the possibility to get Metrics out of your application, you could create a MetricsProxy. In this example we are creating a pure <strong><em>MetricsProxy</em></strong> you could do the following.</p>
+<p>If you need the possibility to get Metrics out of your application, you could create a MetricsProxy. In this example we are creating a pure <strong><em>MetricsProxy</em></strong> you could do the following:</p>
 <pre><code class="java">    final InnerDemoInterface demoLogic = VirtualProxyBuilder
         .createBuilder(InnerDemoInterface.class, new InnerDemoClass())
         .addMetrics()
@@ -188,7 +188,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
 
 </code></pre>
 
-<p>You could combine this with a <strong><em>VirtualProxy</em></strong> to get a <strong><em>VirtualMetricsProxy</em></strong></p>
+<p>You could combine this with a <strong><em>VirtualProxy</em></strong> to get a <strong><em>VirtualMetricsProxy</em></strong>:</p>
 <pre><code class="java">    final Service service = DynamicProxyBuilder
         .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
         .addMetrics()
@@ -197,8 +197,8 @@ final DemoInterface demoLogic = VirtualProxyBuilder
 </code></pre>
 
 <h2 id="preaction-postaction">PreAction -- PostAction<a class="headerlink" href="#preaction-postaction" title="Permanent link">&para;</a></h2>
-<p>Sometime you want to have the possibility to do something before or after a Methodinvocation. For this we have the 
-<strong><em>PreAction</em></strong> and <strong><em>PostAction</em></strong>. The Acions are executed in the order they are added to the Proxy.</p>
+<p>Sometimes you want to have the possibility to do something before or after a Methodinvocation. For this we have the 
+<strong><em>PreAction</em></strong> and <strong><em>PostAction</em></strong>. The Actions are executed in the order they are added to the Proxy.</p>
 <pre><code class="java">    final Service service = DynamicProxyBuilder
         .createBuilder(Service.class, new ServiceImpl())
         .addIPreAction((original, method, args1) -&gt; out.println(&quot;001 = &quot; + method.getName()))
@@ -207,7 +207,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .build();
 </code></pre>
 
-<p>A <strong><em>VirtualProxy</em></strong> with <strong><em>PreActions</em></strong> will lead to the execution of all <strong>*PreActions</strong> before the realSubject will be created. </p>
+<p>A <strong><em>VirtualProxy</em></strong> with <strong><em>PreActions</em></strong> will lead to the execution of all <strong><em>PreActions</em></strong> before the real Subject will be created. </p>
 <pre><code class="java">    final Service service = DynamicProxyBuilder
         .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
         .addIPreAction((original, method, args1) -&gt; out.println(&quot;001 = &quot; + method.getName()))
@@ -216,7 +216,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
         .build();
 </code></pre>
 
-<p>If you combine it with a <strong><em>SecurityVirtualProxy</em></strong> with <strong><em>PreActions</em></strong> the Security-Rule will be invoced first.</p>
+<p>If you combine it with a <strong><em>SecurityVirtualProxy</em></strong> with <strong><em>PreActions</em></strong> the Security-Rule will be invoked first.</p>
 <pre><code class="java">    final Service service = DynamicProxyBuilder
         .createBuilder(Service.class, ServiceImpl.class, CreationStrategy.SOME_DUPLICATES)
         .addIPreAction((original, method, args1) -&gt; out.println(&quot;001 = &quot; + method.getName()))
@@ -230,8 +230,7 @@ final DemoInterface demoLogic = VirtualProxyBuilder
 </code></pre>
 
 <h2 id="creationstrategies">CreationStrategies<a class="headerlink" href="#creationstrategies" title="Permanent link">&para;</a></h2>
-<p>With the <strong><em>CreateionStrategies</em></strong> you can choos what will be the right way of synchronization for you if you are using <strong><em>VirtualProxies</em></strong>. You can implement some other by yourself, if needed. With <strong><em>CreationStrategies</em></strong> you can do different things. Not only the creation of one Element is possible, you can f.e. create a pool of instances used randomly
- or you can do something like <strong><em>MethodScoped</em></strong>. </p>
+<p>With the <strong><em>CreationStrategies</em></strong> you can choose what will be the right way of synchronization for you if you are using <strong><em>VirtualProxies</em></strong>. You can implement some other by yourself, if needed. With <strong><em>CreationStrategies</em></strong> you can do different things. Not only the creation of one Element is possible, you can e.g. create a pool of instances used randomly or you can do something like <strong><em>MethodScoped</em></strong>. </p>
 <h3 id="methodscoped">MethodScoped<a class="headerlink" href="#methodscoped" title="Permanent link">&para;</a></h3>
 <p>This <strong><em>CreationStrategy</em></strong> will create for every method invocation a new instance.</p>
 <pre><code class="java">public class ServiceStrategyFactoryMethodScoped&lt;T&gt; implements ServiceStrategyFactory&lt;T&gt; {
