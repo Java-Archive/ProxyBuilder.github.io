@@ -4,15 +4,15 @@
 
 **Web:** [www.sven-ruppert.de](www.sven-ruppert.de)
 
-**Twitter:** [@SvenRuppert](https://twitter.com/SvenRuppert)
+**Twitter:** [@SvenRuppert](https://twitter.com/SvenRuppert)
 
 **Landry:** [http://lanyrd.com/profile/svenruppert/](http://lanyrd.com/profile/svenruppert/)
 
-**Publications:** [http://www.rapidpm.org/publications/index.html](http://www.rapidpm.org/publications/index.html)
+**Publications:** [http://www.rapidpm.org/publications/index.html](http://www.rapidpm.org/publications/index.html)
 
-**Talks:** [http://www.rapidpm.org/conferences/index.html](http://www.rapidpm.org/conferences/index.html)
+**Talks:** [http://www.rapidpm.org/conferences/index.html](http://www.rapidpm.org/conferences/index.html)
 
-**Linkedin:** [https://www.linkedin.com/in/svenruppert](https://www.linkedin.com/in/svenruppert) 
+**Linkedin:** [https://www.linkedin.com/in/svenruppert](https://www.linkedin.com/in/svenruppert) 
 
 
 

@@ -1,4 +1,8 @@
 site_name: ProxyBuilder
+site_author: Sven Ruppert
+google_analytics: ['UA-35462441-5', 'ProxyBuilder']
+
+
 pages:
 - Home: index.md
 - DynamicProxy: dynamicproxy/index.md
